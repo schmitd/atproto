@@ -58,7 +58,7 @@ const FEED_VIEW_PREF_DEFAULTS = {
 }
 
 const THREAD_VIEW_PREF_DEFAULTS = {
-  sort: 'oldest',
+  sort: 'hotness',
   prioritizeFollowedUsers: true,
 }
 

@@ -217,6 +217,8 @@ export function genObject(
 }
 
 export function genToken(file: SourceFile, lexUri: string, def: LexToken) {
+  //= /** <comment> */
+  //= export const <TOKEN> = `${id}#<token>`
   genComment(
     file.addVariableStatement({
       isExported: true,
@@ -224,7 +226,7 @@ export function genToken(file: SourceFile, lexUri: string, def: LexToken) {
       declarations: [
         {
           name: toScreamingSnakeCase(getHash(lexUri)),
-          initializer: `"${stripScheme(lexUri)}"`,
+          initializer: `\`\${id}#${getHash(lexUri)}\``,
         },
       ],
     }),

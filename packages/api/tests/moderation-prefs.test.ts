@@ -80,7 +80,7 @@ describe('agent', () => {
       },
       threadViewPrefs: {
         prioritizeFollowedUsers: true,
-        sort: 'oldest',
+        sort: 'hotness',
       },
       bskyAppState: {
         activeProgressGuide: undefined,
@@ -129,7 +129,7 @@ describe('agent', () => {
         },
       },
       threadViewPrefs: {
-        sort: 'oldest',
+        sort: 'hotness',
         prioritizeFollowedUsers: true,
       },
       bskyAppState: {
@@ -164,7 +164,7 @@ describe('agent', () => {
         },
       },
       threadViewPrefs: {
-        sort: 'oldest',
+        sort: 'hotness',
         prioritizeFollowedUsers: true,
       },
       bskyAppState: {
@@ -221,7 +221,7 @@ describe('agent', () => {
         },
       },
       threadViewPrefs: {
-        sort: 'oldest',
+        sort: 'hotness',
         prioritizeFollowedUsers: true,
       },
       bskyAppState: {

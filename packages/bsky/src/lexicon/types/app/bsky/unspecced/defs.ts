@@ -43,3 +43,23 @@ export function validateSkeletonSearchActor(v: unknown) {
     v,
   ) as ValidationResult<SkeletonSearchActor>
 }
+
+export interface SkeletonSearchStarterPack {
+  uri: string
+  [k: string]: unknown
+}
+
+export function isSkeletonSearchStarterPack(
+  v: unknown,
+): v is SkeletonSearchStarterPack & {
+  $type: $Type<'app.bsky.unspecced.defs', 'skeletonSearchStarterPack'>
+} {
+  return is$typed(v, id, 'skeletonSearchStarterPack')
+}
+
+export function validateSkeletonSearchStarterPack(v: unknown) {
+  return lexicons.validate(
+    `${id}#skeletonSearchStarterPack`,
+    v,
+  ) as ValidationResult<SkeletonSearchStarterPack>
+}

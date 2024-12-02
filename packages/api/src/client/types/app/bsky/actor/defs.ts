@@ -324,7 +324,13 @@ export function validateFeedViewPref(v: unknown) {
 export interface ThreadViewPref {
   $type?: 'app.bsky.actor.defs#threadViewPref'
   /** Sorting mode for threads. */
-  sort?: 'oldest' | 'newest' | 'most-likes' | 'random' | (string & {})
+  sort?:
+    | 'oldest'
+    | 'newest'
+    | 'most-likes'
+    | 'random'
+    | 'hotness'
+    | (string & {})
   /** Show followed users at the top of all replies. */
   prioritizeFollowedUsers?: boolean
 }
