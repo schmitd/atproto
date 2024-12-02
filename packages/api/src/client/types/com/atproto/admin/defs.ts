@@ -15,11 +15,7 @@ export interface StatusAttr {
   ref?: string
 }
 
-export function isStatusAttr<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.admin.defs', 'statusAttr'> }>
-  : V & { $type: $Type<'com.atproto.admin.defs', 'statusAttr'> } {
+export function isStatusAttr<V>(v: V) {
   return is$typed(v, id, 'statusAttr')
 }
 
@@ -50,11 +46,7 @@ export interface AccountView {
   threatSignatures?: ThreatSignature[]
 }
 
-export function isAccountView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.admin.defs', 'accountView'> }>
-  : V & { $type: $Type<'com.atproto.admin.defs', 'accountView'> } {
+export function isAccountView<V>(v: V) {
   return is$typed(v, id, 'accountView')
 }
 
@@ -74,11 +66,7 @@ export interface RepoRef {
   did: string
 }
 
-export function isRepoRef<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.admin.defs', 'repoRef'> }>
-  : V & { $type: $Type<'com.atproto.admin.defs', 'repoRef'> } {
+export function isRepoRef<V>(v: V) {
   return is$typed(v, id, 'repoRef')
 }
 
@@ -97,11 +85,7 @@ export interface RepoBlobRef {
   recordUri?: string
 }
 
-export function isRepoBlobRef<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.admin.defs', 'repoBlobRef'> }>
-  : V & { $type: $Type<'com.atproto.admin.defs', 'repoBlobRef'> } {
+export function isRepoBlobRef<V>(v: V) {
   return is$typed(v, id, 'repoBlobRef')
 }
 
@@ -122,11 +106,7 @@ export interface ThreatSignature {
   value: string
 }
 
-export function isThreatSignature<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.admin.defs', 'threatSignature'> }>
-  : V & { $type: $Type<'com.atproto.admin.defs', 'threatSignature'> } {
+export function isThreatSignature<V>(v: V) {
   return is$typed(v, id, 'threatSignature')
 }
 

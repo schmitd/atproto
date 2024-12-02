@@ -18,11 +18,7 @@ export interface MessageRef {
   messageId: string
 }
 
-export function isMessageRef<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'messageRef'> }>
-  : V & { $type: $Type<'chat.bsky.convo.defs', 'messageRef'> } {
+export function isMessageRef<V>(v: V) {
   return is$typed(v, id, 'messageRef')
 }
 
@@ -45,11 +41,7 @@ export interface MessageInput {
   embed?: $Typed<AppBskyEmbedRecord.Main> | { $type: string }
 }
 
-export function isMessageInput<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'messageInput'> }>
-  : V & { $type: $Type<'chat.bsky.convo.defs', 'messageInput'> } {
+export function isMessageInput<V>(v: V) {
   return is$typed(v, id, 'messageInput')
 }
 
@@ -76,11 +68,7 @@ export interface MessageView {
   sentAt: string
 }
 
-export function isMessageView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'messageView'> }>
-  : V & { $type: $Type<'chat.bsky.convo.defs', 'messageView'> } {
+export function isMessageView<V>(v: V) {
   return is$typed(v, id, 'messageView')
 }
 
@@ -103,11 +91,7 @@ export interface DeletedMessageView {
   sentAt: string
 }
 
-export function isDeletedMessageView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'deletedMessageView'> }>
-  : V & { $type: $Type<'chat.bsky.convo.defs', 'deletedMessageView'> } {
+export function isDeletedMessageView<V>(v: V) {
   return is$typed(v, id, 'deletedMessageView')
 }
 
@@ -129,11 +113,7 @@ export interface MessageViewSender {
   did: string
 }
 
-export function isMessageViewSender<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'messageViewSender'> }>
-  : V & { $type: $Type<'chat.bsky.convo.defs', 'messageViewSender'> } {
+export function isMessageViewSender<V>(v: V) {
   return is$typed(v, id, 'messageViewSender')
 }
 
@@ -164,11 +144,7 @@ export interface ConvoView {
   unreadCount: number
 }
 
-export function isConvoView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'convoView'> }>
-  : V & { $type: $Type<'chat.bsky.convo.defs', 'convoView'> } {
+export function isConvoView<V>(v: V) {
   return is$typed(v, id, 'convoView')
 }
 
@@ -186,11 +162,7 @@ export interface LogBeginConvo {
   convoId: string
 }
 
-export function isLogBeginConvo<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'logBeginConvo'> }>
-  : V & { $type: $Type<'chat.bsky.convo.defs', 'logBeginConvo'> } {
+export function isLogBeginConvo<V>(v: V) {
   return is$typed(v, id, 'logBeginConvo')
 }
 
@@ -211,11 +183,7 @@ export interface LogLeaveConvo {
   convoId: string
 }
 
-export function isLogLeaveConvo<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'logLeaveConvo'> }>
-  : V & { $type: $Type<'chat.bsky.convo.defs', 'logLeaveConvo'> } {
+export function isLogLeaveConvo<V>(v: V) {
   return is$typed(v, id, 'logLeaveConvo')
 }
 
@@ -237,11 +205,7 @@ export interface LogCreateMessage {
   message: $Typed<MessageView> | $Typed<DeletedMessageView> | { $type: string }
 }
 
-export function isLogCreateMessage<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'logCreateMessage'> }>
-  : V & { $type: $Type<'chat.bsky.convo.defs', 'logCreateMessage'> } {
+export function isLogCreateMessage<V>(v: V) {
   return is$typed(v, id, 'logCreateMessage')
 }
 
@@ -265,11 +229,7 @@ export interface LogDeleteMessage {
   message: $Typed<MessageView> | $Typed<DeletedMessageView> | { $type: string }
 }
 
-export function isLogDeleteMessage<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'logDeleteMessage'> }>
-  : V & { $type: $Type<'chat.bsky.convo.defs', 'logDeleteMessage'> } {
+export function isLogDeleteMessage<V>(v: V) {
   return is$typed(v, id, 'logDeleteMessage')
 }
 

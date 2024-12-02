@@ -61,11 +61,7 @@ export interface Like {
   actor: AppBskyActorDefs.ProfileView
 }
 
-export function isLike<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.getLikes', 'like'> }>
-  : V & { $type: $Type<'app.bsky.feed.getLikes', 'like'> } {
+export function isLike<V>(v: V) {
   return is$typed(v, id, 'like')
 }
 

@@ -55,14 +55,7 @@ export interface AppPassword {
   privileged?: boolean
 }
 
-export function isAppPassword<V>(v: V): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'com.atproto.server.createAppPassword', 'appPassword'> }
-    >
-  : V & {
-      $type: $Type<'com.atproto.server.createAppPassword', 'appPassword'>
-    } {
+export function isAppPassword<V>(v: V) {
   return is$typed(v, id, 'appPassword')
 }
 

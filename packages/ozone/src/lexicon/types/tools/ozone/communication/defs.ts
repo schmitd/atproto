@@ -26,14 +26,7 @@ export interface TemplateView {
   updatedAt: string
 }
 
-export function isTemplateView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.communication.defs', 'templateView'> }
-    >
-  : V & { $type: $Type<'tools.ozone.communication.defs', 'templateView'> } {
+export function isTemplateView<V>(v: V) {
   return is$typed(v, id, 'templateView')
 }
 

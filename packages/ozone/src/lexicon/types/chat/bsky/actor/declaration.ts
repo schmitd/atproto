@@ -14,11 +14,7 @@ export interface Record {
   [k: string]: unknown
 }
 
-export function isRecord<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'chat.bsky.actor.declaration', 'main'> }>
-  : V & { $type: $Type<'chat.bsky.actor.declaration', 'main'> } {
+export function isRecord<V>(v: V) {
   return is$typed(v, id, 'main')
 }
 

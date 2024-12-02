@@ -14,11 +14,7 @@ export interface Main {
   external: External
 }
 
-export function isMain<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.external', 'main'> }>
-  : V & { $type: $Type<'app.bsky.embed.external', 'main'> } {
+export function isMain<V>(v: V) {
   return is$typed(v, id, 'main')
 }
 
@@ -38,11 +34,7 @@ export interface External {
   thumb?: BlobRef
 }
 
-export function isExternal<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.external', 'external'> }>
-  : V & { $type: $Type<'app.bsky.embed.external', 'external'> } {
+export function isExternal<V>(v: V) {
   return is$typed(v, id, 'external')
 }
 
@@ -59,11 +51,7 @@ export interface View {
   external: ViewExternal
 }
 
-export function isView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.external', 'view'> }>
-  : V & { $type: $Type<'app.bsky.embed.external', 'view'> } {
+export function isView<V>(v: V) {
   return is$typed(v, id, 'view')
 }
 
@@ -83,11 +71,7 @@ export interface ViewExternal {
   thumb?: string
 }
 
-export function isViewExternal<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.external', 'viewExternal'> }>
-  : V & { $type: $Type<'app.bsky.embed.external', 'viewExternal'> } {
+export function isViewExternal<V>(v: V) {
   return is$typed(v, id, 'viewExternal')
 }
 

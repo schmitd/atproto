@@ -63,11 +63,7 @@ export interface Commit {
   time: string
 }
 
-export function isCommit<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.sync.subscribeRepos', 'commit'> }>
-  : V & { $type: $Type<'com.atproto.sync.subscribeRepos', 'commit'> } {
+export function isCommit<V>(v: V) {
   return is$typed(v, id, 'commit')
 }
 
@@ -89,11 +85,7 @@ export interface Identity {
   handle?: string
 }
 
-export function isIdentity<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.sync.subscribeRepos', 'identity'> }>
-  : V & { $type: $Type<'com.atproto.sync.subscribeRepos', 'identity'> } {
+export function isIdentity<V>(v: V) {
   return is$typed(v, id, 'identity')
 }
 
@@ -117,11 +109,7 @@ export interface Account {
   status?: 'takendown' | 'suspended' | 'deleted' | 'deactivated' | (string & {})
 }
 
-export function isAccount<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.sync.subscribeRepos', 'account'> }>
-  : V & { $type: $Type<'com.atproto.sync.subscribeRepos', 'account'> } {
+export function isAccount<V>(v: V) {
   return is$typed(v, id, 'account')
 }
 
@@ -142,11 +130,7 @@ export interface Handle {
   time: string
 }
 
-export function isHandle<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.sync.subscribeRepos', 'handle'> }>
-  : V & { $type: $Type<'com.atproto.sync.subscribeRepos', 'handle'> } {
+export function isHandle<V>(v: V) {
   return is$typed(v, id, 'handle')
 }
 
@@ -167,11 +151,7 @@ export interface Migrate {
   time: string
 }
 
-export function isMigrate<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.sync.subscribeRepos', 'migrate'> }>
-  : V & { $type: $Type<'com.atproto.sync.subscribeRepos', 'migrate'> } {
+export function isMigrate<V>(v: V) {
   return is$typed(v, id, 'migrate')
 }
 
@@ -191,11 +171,7 @@ export interface Tombstone {
   time: string
 }
 
-export function isTombstone<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.sync.subscribeRepos', 'tombstone'> }>
-  : V & { $type: $Type<'com.atproto.sync.subscribeRepos', 'tombstone'> } {
+export function isTombstone<V>(v: V) {
   return is$typed(v, id, 'tombstone')
 }
 
@@ -213,11 +189,7 @@ export interface Info {
   message?: string
 }
 
-export function isInfo<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.sync.subscribeRepos', 'info'> }>
-  : V & { $type: $Type<'com.atproto.sync.subscribeRepos', 'info'> } {
+export function isInfo<V>(v: V) {
   return is$typed(v, id, 'info')
 }
 
@@ -238,11 +210,7 @@ export interface RepoOp {
   cid: CID | null
 }
 
-export function isRepoOp<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.sync.subscribeRepos', 'repoOp'> }>
-  : V & { $type: $Type<'com.atproto.sync.subscribeRepos', 'repoOp'> } {
+export function isRepoOp<V>(v: V) {
   return is$typed(v, id, 'repoOp')
 }
 

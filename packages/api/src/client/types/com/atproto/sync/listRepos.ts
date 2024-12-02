@@ -47,11 +47,7 @@ export interface Repo {
   status?: 'takendown' | 'suspended' | 'deactivated' | (string & {})
 }
 
-export function isRepo<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.sync.listRepos', 'repo'> }>
-  : V & { $type: $Type<'com.atproto.sync.listRepos', 'repo'> } {
+export function isRepo<V>(v: V) {
   return is$typed(v, id, 'repo')
 }
 

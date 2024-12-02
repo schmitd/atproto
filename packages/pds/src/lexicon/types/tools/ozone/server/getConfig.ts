@@ -52,14 +52,7 @@ export interface ServiceConfig {
   url?: string
 }
 
-export function isServiceConfig<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.server.getConfig', 'serviceConfig'> }
-    >
-  : V & { $type: $Type<'tools.ozone.server.getConfig', 'serviceConfig'> } {
+export function isServiceConfig<V>(v: V) {
   return is$typed(v, id, 'serviceConfig')
 }
 
@@ -83,11 +76,7 @@ export interface ViewerConfig {
     | (string & {})
 }
 
-export function isViewerConfig<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.server.getConfig', 'viewerConfig'> }>
-  : V & { $type: $Type<'tools.ozone.server.getConfig', 'viewerConfig'> } {
+export function isViewerConfig<V>(v: V) {
   return is$typed(v, id, 'viewerConfig')
 }
 

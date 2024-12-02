@@ -24,11 +24,7 @@ export interface Record {
   [k: string]: unknown
 }
 
-export function isRecord<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.threadgate', 'main'> }>
-  : V & { $type: $Type<'app.bsky.feed.threadgate', 'main'> } {
+export function isRecord<V>(v: V) {
   return is$typed(v, id, 'main')
 }
 
@@ -45,11 +41,7 @@ export interface MentionRule {
   $type?: $Type<'app.bsky.feed.threadgate', 'mentionRule'>
 }
 
-export function isMentionRule<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.threadgate', 'mentionRule'> }>
-  : V & { $type: $Type<'app.bsky.feed.threadgate', 'mentionRule'> } {
+export function isMentionRule<V>(v: V) {
   return is$typed(v, id, 'mentionRule')
 }
 
@@ -69,11 +61,7 @@ export interface FollowingRule {
   $type?: $Type<'app.bsky.feed.threadgate', 'followingRule'>
 }
 
-export function isFollowingRule<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.threadgate', 'followingRule'> }>
-  : V & { $type: $Type<'app.bsky.feed.threadgate', 'followingRule'> } {
+export function isFollowingRule<V>(v: V) {
   return is$typed(v, id, 'followingRule')
 }
 
@@ -94,11 +82,7 @@ export interface ListRule {
   list: string
 }
 
-export function isListRule<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.threadgate', 'listRule'> }>
-  : V & { $type: $Type<'app.bsky.feed.threadgate', 'listRule'> } {
+export function isListRule<V>(v: V) {
   return is$typed(v, id, 'listRule')
 }
 

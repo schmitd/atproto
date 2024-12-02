@@ -46,11 +46,7 @@ export interface Links {
   termsOfService?: string
 }
 
-export function isLinks<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.server.describeServer', 'links'> }>
-  : V & { $type: $Type<'com.atproto.server.describeServer', 'links'> } {
+export function isLinks<V>(v: V) {
   return is$typed(v, id, 'links')
 }
 
@@ -67,11 +63,7 @@ export interface Contact {
   email?: string
 }
 
-export function isContact<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.server.describeServer', 'contact'> }>
-  : V & { $type: $Type<'com.atproto.server.describeServer', 'contact'> } {
+export function isContact<V>(v: V) {
   return is$typed(v, id, 'contact')
 }
 

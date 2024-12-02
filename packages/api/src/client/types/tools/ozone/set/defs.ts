@@ -14,11 +14,7 @@ export interface Set {
   description?: string
 }
 
-export function isSet<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.set.defs', 'set'> }>
-  : V & { $type: $Type<'tools.ozone.set.defs', 'set'> } {
+export function isSet<V>(v: V) {
   return is$typed(v, id, 'set')
 }
 
@@ -39,11 +35,7 @@ export interface SetView {
   updatedAt: string
 }
 
-export function isSetView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.set.defs', 'setView'> }>
-  : V & { $type: $Type<'tools.ozone.set.defs', 'setView'> } {
+export function isSetView<V>(v: V) {
   return is$typed(v, id, 'setView')
 }
 

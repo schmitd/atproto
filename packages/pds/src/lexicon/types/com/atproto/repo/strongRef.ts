@@ -14,11 +14,7 @@ export interface Main {
   cid: string
 }
 
-export function isMain<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.repo.strongRef', 'main'> }>
-  : V & { $type: $Type<'com.atproto.repo.strongRef', 'main'> } {
+export function isMain<V>(v: V) {
   return is$typed(v, id, 'main')
 }
 

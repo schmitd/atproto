@@ -49,11 +49,7 @@ export interface ModEventView {
   subjectHandle?: string
 }
 
-export function isModEventView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'modEventView'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventView'> } {
+export function isModEventView<V>(v: V) {
   return is$typed(v, id, 'modEventView')
 }
 
@@ -102,14 +98,7 @@ export interface ModEventViewDetail {
   createdAt: string
 }
 
-export function isModEventViewDetail<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'modEventViewDetail'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventViewDetail'> } {
+export function isModEventViewDetail<V>(v: V) {
   return is$typed(v, id, 'modEventViewDetail')
 }
 
@@ -157,14 +146,7 @@ export interface SubjectStatusView {
   tags?: string[]
 }
 
-export function isSubjectStatusView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'subjectStatusView'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'subjectStatusView'> } {
+export function isSubjectStatusView<V>(v: V) {
   return is$typed(v, id, 'subjectStatusView')
 }
 
@@ -207,14 +189,7 @@ export interface ModEventTakedown {
   acknowledgeAccountSubjects?: boolean
 }
 
-export function isModEventTakedown<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'modEventTakedown'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventTakedown'> } {
+export function isModEventTakedown<V>(v: V) {
   return is$typed(v, id, 'modEventTakedown')
 }
 
@@ -238,16 +213,7 @@ export interface ModEventReverseTakedown {
   comment?: string
 }
 
-export function isModEventReverseTakedown<V>(v: V): v is V extends {
-  $type?: string
-}
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'modEventReverseTakedown'> }
-    >
-  : V & {
-      $type: $Type<'tools.ozone.moderation.defs', 'modEventReverseTakedown'>
-    } {
+export function isModEventReverseTakedown<V>(v: V) {
   return is$typed(v, id, 'modEventReverseTakedown')
 }
 
@@ -273,16 +239,7 @@ export interface ModEventResolveAppeal {
   comment?: string
 }
 
-export function isModEventResolveAppeal<V>(v: V): v is V extends {
-  $type?: string
-}
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'modEventResolveAppeal'> }
-    >
-  : V & {
-      $type: $Type<'tools.ozone.moderation.defs', 'modEventResolveAppeal'>
-    } {
+export function isModEventResolveAppeal<V>(v: V) {
   return is$typed(v, id, 'modEventResolveAppeal')
 }
 
@@ -307,14 +264,7 @@ export interface ModEventComment {
   sticky?: boolean
 }
 
-export function isModEventComment<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'modEventComment'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventComment'> } {
+export function isModEventComment<V>(v: V) {
   return is$typed(v, id, 'modEventComment')
 }
 
@@ -340,14 +290,7 @@ export interface ModEventReport {
   reportType: ComAtprotoModerationDefs.ReasonType
 }
 
-export function isModEventReport<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'modEventReport'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventReport'> } {
+export function isModEventReport<V>(v: V) {
   return is$typed(v, id, 'modEventReport')
 }
 
@@ -372,11 +315,7 @@ export interface ModEventLabel {
   negateLabelVals: string[]
 }
 
-export function isModEventLabel<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'modEventLabel'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventLabel'> } {
+export function isModEventLabel<V>(v: V) {
   return is$typed(v, id, 'modEventLabel')
 }
 
@@ -396,14 +335,7 @@ export interface ModEventAcknowledge {
   comment?: string
 }
 
-export function isModEventAcknowledge<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'modEventAcknowledge'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventAcknowledge'> } {
+export function isModEventAcknowledge<V>(v: V) {
   return is$typed(v, id, 'modEventAcknowledge')
 }
 
@@ -425,14 +357,7 @@ export interface ModEventEscalate {
   comment?: string
 }
 
-export function isModEventEscalate<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'modEventEscalate'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventEscalate'> } {
+export function isModEventEscalate<V>(v: V) {
   return is$typed(v, id, 'modEventEscalate')
 }
 
@@ -457,11 +382,7 @@ export interface ModEventMute {
   durationInHours: number
 }
 
-export function isModEventMute<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'modEventMute'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventMute'> } {
+export function isModEventMute<V>(v: V) {
   return is$typed(v, id, 'modEventMute')
 }
 
@@ -483,14 +404,7 @@ export interface ModEventUnmute {
   comment?: string
 }
 
-export function isModEventUnmute<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'modEventUnmute'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventUnmute'> } {
+export function isModEventUnmute<V>(v: V) {
   return is$typed(v, id, 'modEventUnmute')
 }
 
@@ -515,16 +429,7 @@ export interface ModEventMuteReporter {
   durationInHours?: number
 }
 
-export function isModEventMuteReporter<V>(v: V): v is V extends {
-  $type?: string
-}
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'modEventMuteReporter'> }
-    >
-  : V & {
-      $type: $Type<'tools.ozone.moderation.defs', 'modEventMuteReporter'>
-    } {
+export function isModEventMuteReporter<V>(v: V) {
   return is$typed(v, id, 'modEventMuteReporter')
 }
 
@@ -548,16 +453,7 @@ export interface ModEventUnmuteReporter {
   comment?: string
 }
 
-export function isModEventUnmuteReporter<V>(v: V): v is V extends {
-  $type?: string
-}
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'modEventUnmuteReporter'> }
-    >
-  : V & {
-      $type: $Type<'tools.ozone.moderation.defs', 'modEventUnmuteReporter'>
-    } {
+export function isModEventUnmuteReporter<V>(v: V) {
   return is$typed(v, id, 'modEventUnmuteReporter')
 }
 
@@ -587,11 +483,7 @@ export interface ModEventEmail {
   comment?: string
 }
 
-export function isModEventEmail<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'modEventEmail'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventEmail'> } {
+export function isModEventEmail<V>(v: V) {
   return is$typed(v, id, 'modEventEmail')
 }
 
@@ -612,14 +504,7 @@ export interface ModEventDivert {
   comment?: string
 }
 
-export function isModEventDivert<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'modEventDivert'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventDivert'> } {
+export function isModEventDivert<V>(v: V) {
   return is$typed(v, id, 'modEventDivert')
 }
 
@@ -647,11 +532,7 @@ export interface ModEventTag {
   comment?: string
 }
 
-export function isModEventTag<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'modEventTag'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'modEventTag'> } {
+export function isModEventTag<V>(v: V) {
   return is$typed(v, id, 'modEventTag')
 }
 
@@ -683,11 +564,7 @@ export interface AccountEvent {
   timestamp: string
 }
 
-export function isAccountEvent<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'accountEvent'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'accountEvent'> } {
+export function isAccountEvent<V>(v: V) {
   return is$typed(v, id, 'accountEvent')
 }
 
@@ -712,11 +589,7 @@ export interface IdentityEvent {
   timestamp: string
 }
 
-export function isIdentityEvent<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'identityEvent'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'identityEvent'> } {
+export function isIdentityEvent<V>(v: V) {
   return is$typed(v, id, 'identityEvent')
 }
 
@@ -740,11 +613,7 @@ export interface RecordEvent {
   timestamp: string
 }
 
-export function isRecordEvent<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'recordEvent'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'recordEvent'> } {
+export function isRecordEvent<V>(v: V) {
   return is$typed(v, id, 'recordEvent')
 }
 
@@ -774,11 +643,7 @@ export interface RepoView {
   threatSignatures?: ComAtprotoAdminDefs.ThreatSignature[]
 }
 
-export function isRepoView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'repoView'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'repoView'> } {
+export function isRepoView<V>(v: V) {
   return is$typed(v, id, 'repoView')
 }
 
@@ -808,14 +673,7 @@ export interface RepoViewDetail {
   threatSignatures?: ComAtprotoAdminDefs.ThreatSignature[]
 }
 
-export function isRepoViewDetail<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'repoViewDetail'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'repoViewDetail'> } {
+export function isRepoViewDetail<V>(v: V) {
   return is$typed(v, id, 'repoViewDetail')
 }
 
@@ -837,14 +695,7 @@ export interface RepoViewNotFound {
   did: string
 }
 
-export function isRepoViewNotFound<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'repoViewNotFound'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'repoViewNotFound'> } {
+export function isRepoViewNotFound<V>(v: V) {
   return is$typed(v, id, 'repoViewNotFound')
 }
 
@@ -872,11 +723,7 @@ export interface RecordView {
   repo: RepoView
 }
 
-export function isRecordView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'recordView'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'recordView'> } {
+export function isRecordView<V>(v: V) {
   return is$typed(v, id, 'recordView')
 }
 
@@ -903,14 +750,7 @@ export interface RecordViewDetail {
   repo: RepoView
 }
 
-export function isRecordViewDetail<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'recordViewDetail'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'recordViewDetail'> } {
+export function isRecordViewDetail<V>(v: V) {
   return is$typed(v, id, 'recordViewDetail')
 }
 
@@ -932,14 +772,7 @@ export interface RecordViewNotFound {
   uri: string
 }
 
-export function isRecordViewNotFound<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'recordViewNotFound'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'recordViewNotFound'> } {
+export function isRecordViewNotFound<V>(v: V) {
   return is$typed(v, id, 'recordViewNotFound')
 }
 
@@ -961,11 +794,7 @@ export interface Moderation {
   subjectStatus?: SubjectStatusView
 }
 
-export function isModeration<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'moderation'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'moderation'> } {
+export function isModeration<V>(v: V) {
   return is$typed(v, id, 'moderation')
 }
 
@@ -985,14 +814,7 @@ export interface ModerationDetail {
   subjectStatus?: SubjectStatusView
 }
 
-export function isModerationDetail<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'moderationDetail'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'moderationDetail'> } {
+export function isModerationDetail<V>(v: V) {
   return is$typed(v, id, 'moderationDetail')
 }
 
@@ -1019,11 +841,7 @@ export interface BlobView {
   moderation?: Moderation
 }
 
-export function isBlobView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'blobView'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'blobView'> } {
+export function isBlobView<V>(v: V) {
   return is$typed(v, id, 'blobView')
 }
 
@@ -1041,11 +859,7 @@ export interface ImageDetails {
   height: number
 }
 
-export function isImageDetails<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'imageDetails'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'imageDetails'> } {
+export function isImageDetails<V>(v: V) {
   return is$typed(v, id, 'imageDetails')
 }
 
@@ -1067,11 +881,7 @@ export interface VideoDetails {
   length: number
 }
 
-export function isVideoDetails<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'videoDetails'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'videoDetails'> } {
+export function isVideoDetails<V>(v: V) {
   return is$typed(v, id, 'videoDetails')
 }
 
@@ -1102,14 +912,7 @@ export interface AccountHosting {
   reactivatedAt?: string
 }
 
-export function isAccountHosting<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'tools.ozone.moderation.defs', 'accountHosting'> }
-    >
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'accountHosting'> } {
+export function isAccountHosting<V>(v: V) {
   return is$typed(v, id, 'accountHosting')
 }
 
@@ -1134,11 +937,7 @@ export interface RecordHosting {
   deletedAt?: string
 }
 
-export function isRecordHosting<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.moderation.defs', 'recordHosting'> }>
-  : V & { $type: $Type<'tools.ozone.moderation.defs', 'recordHosting'> } {
+export function isRecordHosting<V>(v: V) {
   return is$typed(v, id, 'recordHosting')
 }
 

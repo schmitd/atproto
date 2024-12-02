@@ -21,11 +21,7 @@ export interface LabelerView {
   labels?: ComAtprotoLabelDefs.Label[]
 }
 
-export function isLabelerView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.labeler.defs', 'labelerView'> }>
-  : V & { $type: $Type<'app.bsky.labeler.defs', 'labelerView'> } {
+export function isLabelerView<V>(v: V) {
   return is$typed(v, id, 'labelerView')
 }
 
@@ -52,11 +48,7 @@ export interface LabelerViewDetailed {
   labels?: ComAtprotoLabelDefs.Label[]
 }
 
-export function isLabelerViewDetailed<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.labeler.defs', 'labelerViewDetailed'> }>
-  : V & { $type: $Type<'app.bsky.labeler.defs', 'labelerViewDetailed'> } {
+export function isLabelerViewDetailed<V>(v: V) {
   return is$typed(v, id, 'labelerViewDetailed')
 }
 
@@ -78,11 +70,7 @@ export interface LabelerViewerState {
   like?: string
 }
 
-export function isLabelerViewerState<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.labeler.defs', 'labelerViewerState'> }>
-  : V & { $type: $Type<'app.bsky.labeler.defs', 'labelerViewerState'> } {
+export function isLabelerViewerState<V>(v: V) {
   return is$typed(v, id, 'labelerViewerState')
 }
 
@@ -107,11 +95,7 @@ export interface LabelerPolicies {
   labelValueDefinitions?: ComAtprotoLabelDefs.LabelValueDefinition[]
 }
 
-export function isLabelerPolicies<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.labeler.defs', 'labelerPolicies'> }>
-  : V & { $type: $Type<'app.bsky.labeler.defs', 'labelerPolicies'> } {
+export function isLabelerPolicies<V>(v: V) {
   return is$typed(v, id, 'labelerPolicies')
 }
 

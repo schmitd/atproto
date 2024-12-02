@@ -14,11 +14,7 @@ export interface Main {
   images: Image[]
 }
 
-export function isMain<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.images', 'main'> }>
-  : V & { $type: $Type<'app.bsky.embed.images', 'main'> } {
+export function isMain<V>(v: V) {
   return is$typed(v, id, 'main')
 }
 
@@ -38,11 +34,7 @@ export interface Image {
   aspectRatio?: AppBskyEmbedDefs.AspectRatio
 }
 
-export function isImage<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.images', 'image'> }>
-  : V & { $type: $Type<'app.bsky.embed.images', 'image'> } {
+export function isImage<V>(v: V) {
   return is$typed(v, id, 'image')
 }
 
@@ -59,11 +51,7 @@ export interface View {
   images: ViewImage[]
 }
 
-export function isView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.images', 'view'> }>
-  : V & { $type: $Type<'app.bsky.embed.images', 'view'> } {
+export function isView<V>(v: V) {
   return is$typed(v, id, 'view')
 }
 
@@ -86,11 +74,7 @@ export interface ViewImage {
   aspectRatio?: AppBskyEmbedDefs.AspectRatio
 }
 
-export function isViewImage<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.images', 'viewImage'> }>
-  : V & { $type: $Type<'app.bsky.embed.images', 'viewImage'> } {
+export function isViewImage<V>(v: V) {
   return is$typed(v, id, 'viewImage')
 }
 

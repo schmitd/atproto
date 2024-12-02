@@ -14,11 +14,7 @@ export interface CommitMeta {
   rev: string
 }
 
-export function isCommitMeta<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.repo.defs', 'commitMeta'> }>
-  : V & { $type: $Type<'com.atproto.repo.defs', 'commitMeta'> } {
+export function isCommitMeta<V>(v: V) {
   return is$typed(v, id, 'commitMeta')
 }
 

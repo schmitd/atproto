@@ -42,11 +42,7 @@ export interface Record {
   [k: string]: unknown
 }
 
-export function isRecord<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.post', 'main'> }>
-  : V & { $type: $Type<'app.bsky.feed.post', 'main'> } {
+export function isRecord<V>(v: V) {
   return is$typed(v, id, 'main')
 }
 
@@ -64,11 +60,7 @@ export interface ReplyRef {
   parent: ComAtprotoRepoStrongRef.Main
 }
 
-export function isReplyRef<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.post', 'replyRef'> }>
-  : V & { $type: $Type<'app.bsky.feed.post', 'replyRef'> } {
+export function isReplyRef<V>(v: V) {
   return is$typed(v, id, 'replyRef')
 }
 
@@ -89,11 +81,7 @@ export interface Entity {
   value: string
 }
 
-export function isEntity<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.post', 'entity'> }>
-  : V & { $type: $Type<'app.bsky.feed.post', 'entity'> } {
+export function isEntity<V>(v: V) {
   return is$typed(v, id, 'entity')
 }
 
@@ -112,11 +100,7 @@ export interface TextSlice {
   end: number
 }
 
-export function isTextSlice<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.post', 'textSlice'> }>
-  : V & { $type: $Type<'app.bsky.feed.post', 'textSlice'> } {
+export function isTextSlice<V>(v: V) {
   return is$typed(v, id, 'textSlice')
 }
 

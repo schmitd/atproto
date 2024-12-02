@@ -39,14 +39,7 @@ export interface Suggestion {
   subject: string
 }
 
-export function isSuggestion<V>(v: V): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'app.bsky.unspecced.getTaggedSuggestions', 'suggestion'> }
-    >
-  : V & {
-      $type: $Type<'app.bsky.unspecced.getTaggedSuggestions', 'suggestion'>
-    } {
+export function isSuggestion<V>(v: V) {
   return is$typed(v, id, 'suggestion')
 }
 

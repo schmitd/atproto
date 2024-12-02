@@ -44,14 +44,7 @@ export interface Metadata {
   convosStarted: number
 }
 
-export function isMetadata<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'chat.bsky.moderation.getActorMetadata', 'metadata'> }
-    >
-  : V & { $type: $Type<'chat.bsky.moderation.getActorMetadata', 'metadata'> } {
+export function isMetadata<V>(v: V) {
   return is$typed(v, id, 'metadata')
 }
 

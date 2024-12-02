@@ -16,11 +16,7 @@ export interface Record {
   [k: string]: unknown
 }
 
-export function isRecord<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.like', 'main'> }>
-  : V & { $type: $Type<'app.bsky.feed.like', 'main'> } {
+export function isRecord<V>(v: V) {
   return is$typed(v, id, 'main')
 }
 

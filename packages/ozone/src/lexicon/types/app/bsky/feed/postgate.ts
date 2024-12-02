@@ -19,11 +19,7 @@ export interface Record {
   [k: string]: unknown
 }
 
-export function isRecord<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.postgate', 'main'> }>
-  : V & { $type: $Type<'app.bsky.feed.postgate', 'main'> } {
+export function isRecord<V>(v: V) {
   return is$typed(v, id, 'main')
 }
 
@@ -40,11 +36,7 @@ export interface DisableRule {
   $type?: $Type<'app.bsky.feed.postgate', 'disableRule'>
 }
 
-export function isDisableRule<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.postgate', 'disableRule'> }>
-  : V & { $type: $Type<'app.bsky.feed.postgate', 'disableRule'> } {
+export function isDisableRule<V>(v: V) {
   return is$typed(v, id, 'disableRule')
 }
 

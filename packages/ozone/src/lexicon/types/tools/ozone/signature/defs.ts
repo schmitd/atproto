@@ -14,11 +14,7 @@ export interface SigDetail {
   value: string
 }
 
-export function isSigDetail<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.signature.defs', 'sigDetail'> }>
-  : V & { $type: $Type<'tools.ozone.signature.defs', 'sigDetail'> } {
+export function isSigDetail<V>(v: V) {
   return is$typed(v, id, 'sigDetail')
 }
 

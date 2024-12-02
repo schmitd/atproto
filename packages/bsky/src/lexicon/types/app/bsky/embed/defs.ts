@@ -15,11 +15,7 @@ export interface AspectRatio {
   height: number
 }
 
-export function isAspectRatio<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.defs', 'aspectRatio'> }>
-  : V & { $type: $Type<'app.bsky.embed.defs', 'aspectRatio'> } {
+export function isAspectRatio<V>(v: V) {
   return is$typed(v, id, 'aspectRatio')
 }
 

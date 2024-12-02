@@ -45,22 +45,7 @@ export interface RelatedAccount {
   similarities?: ToolsOzoneSignatureDefs.SigDetail[]
 }
 
-export function isRelatedAccount<V>(v: V): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      {
-        $type: $Type<
-          'tools.ozone.signature.findRelatedAccounts',
-          'relatedAccount'
-        >
-      }
-    >
-  : V & {
-      $type: $Type<
-        'tools.ozone.signature.findRelatedAccounts',
-        'relatedAccount'
-      >
-    } {
+export function isRelatedAccount<V>(v: V) {
   return is$typed(v, id, 'relatedAccount')
 }
 

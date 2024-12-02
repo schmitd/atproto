@@ -31,11 +31,7 @@ export interface Label {
   sig?: Uint8Array
 }
 
-export function isLabel<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.label.defs', 'label'> }>
-  : V & { $type: $Type<'com.atproto.label.defs', 'label'> } {
+export function isLabel<V>(v: V) {
   return is$typed(v, id, 'label')
 }
 
@@ -53,11 +49,7 @@ export interface SelfLabels {
   values: SelfLabel[]
 }
 
-export function isSelfLabels<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.label.defs', 'selfLabels'> }>
-  : V & { $type: $Type<'com.atproto.label.defs', 'selfLabels'> } {
+export function isSelfLabels<V>(v: V) {
   return is$typed(v, id, 'selfLabels')
 }
 
@@ -79,11 +71,7 @@ export interface SelfLabel {
   val: string
 }
 
-export function isSelfLabel<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.label.defs', 'selfLabel'> }>
-  : V & { $type: $Type<'com.atproto.label.defs', 'selfLabel'> } {
+export function isSelfLabel<V>(v: V) {
   return is$typed(v, id, 'selfLabel')
 }
 
@@ -111,14 +99,7 @@ export interface LabelValueDefinition {
   locales: LabelValueDefinitionStrings[]
 }
 
-export function isLabelValueDefinition<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'com.atproto.label.defs', 'labelValueDefinition'> }
-    >
-  : V & { $type: $Type<'com.atproto.label.defs', 'labelValueDefinition'> } {
+export function isLabelValueDefinition<V>(v: V) {
   return is$typed(v, id, 'labelValueDefinition')
 }
 
@@ -146,16 +127,7 @@ export interface LabelValueDefinitionStrings {
   description: string
 }
 
-export function isLabelValueDefinitionStrings<V>(v: V): v is V extends {
-  $type?: string
-}
-  ? Extract<
-      V,
-      { $type: $Type<'com.atproto.label.defs', 'labelValueDefinitionStrings'> }
-    >
-  : V & {
-      $type: $Type<'com.atproto.label.defs', 'labelValueDefinitionStrings'>
-    } {
+export function isLabelValueDefinitionStrings<V>(v: V) {
   return is$typed(v, id, 'labelValueDefinitionStrings')
 }
 

@@ -44,14 +44,7 @@ export interface AccountCodes {
   codes: string[]
 }
 
-export function isAccountCodes<V>(v: V): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'com.atproto.server.createInviteCodes', 'accountCodes'> }
-    >
-  : V & {
-      $type: $Type<'com.atproto.server.createInviteCodes', 'accountCodes'>
-    } {
+export function isAccountCodes<V>(v: V) {
   return is$typed(v, id, 'accountCodes')
 }
 

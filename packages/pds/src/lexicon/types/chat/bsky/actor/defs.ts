@@ -23,11 +23,7 @@ export interface ProfileViewBasic {
   chatDisabled?: boolean
 }
 
-export function isProfileViewBasic<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'chat.bsky.actor.defs', 'profileViewBasic'> }>
-  : V & { $type: $Type<'chat.bsky.actor.defs', 'profileViewBasic'> } {
+export function isProfileViewBasic<V>(v: V) {
   return is$typed(v, id, 'profileViewBasic')
 }
 

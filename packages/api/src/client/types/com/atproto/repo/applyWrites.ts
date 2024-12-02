@@ -66,11 +66,7 @@ export interface Create {
   value: { [_ in string]: unknown }
 }
 
-export function isCreate<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.repo.applyWrites', 'create'> }>
-  : V & { $type: $Type<'com.atproto.repo.applyWrites', 'create'> } {
+export function isCreate<V>(v: V) {
   return is$typed(v, id, 'create')
 }
 
@@ -90,11 +86,7 @@ export interface Update {
   value: { [_ in string]: unknown }
 }
 
-export function isUpdate<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.repo.applyWrites', 'update'> }>
-  : V & { $type: $Type<'com.atproto.repo.applyWrites', 'update'> } {
+export function isUpdate<V>(v: V) {
   return is$typed(v, id, 'update')
 }
 
@@ -113,11 +105,7 @@ export interface Delete {
   rkey: string
 }
 
-export function isDelete<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.repo.applyWrites', 'delete'> }>
-  : V & { $type: $Type<'com.atproto.repo.applyWrites', 'delete'> } {
+export function isDelete<V>(v: V) {
   return is$typed(v, id, 'delete')
 }
 
@@ -136,11 +124,7 @@ export interface CreateResult {
   validationStatus?: 'valid' | 'unknown' | (string & {})
 }
 
-export function isCreateResult<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.repo.applyWrites', 'createResult'> }>
-  : V & { $type: $Type<'com.atproto.repo.applyWrites', 'createResult'> } {
+export function isCreateResult<V>(v: V) {
   return is$typed(v, id, 'createResult')
 }
 
@@ -162,11 +146,7 @@ export interface UpdateResult {
   validationStatus?: 'valid' | 'unknown' | (string & {})
 }
 
-export function isUpdateResult<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.repo.applyWrites', 'updateResult'> }>
-  : V & { $type: $Type<'com.atproto.repo.applyWrites', 'updateResult'> } {
+export function isUpdateResult<V>(v: V) {
   return is$typed(v, id, 'updateResult')
 }
 
@@ -185,11 +165,7 @@ export interface DeleteResult {
   $type?: $Type<'com.atproto.repo.applyWrites', 'deleteResult'>
 }
 
-export function isDeleteResult<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.repo.applyWrites', 'deleteResult'> }>
-  : V & { $type: $Type<'com.atproto.repo.applyWrites', 'deleteResult'> } {
+export function isDeleteResult<V>(v: V) {
   return is$typed(v, id, 'deleteResult')
 }
 

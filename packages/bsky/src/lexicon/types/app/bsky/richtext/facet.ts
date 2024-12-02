@@ -15,11 +15,7 @@ export interface Main {
   features: ($Typed<Mention> | $Typed<Link> | $Typed<Tag> | { $type: string })[]
 }
 
-export function isMain<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.richtext.facet', 'main'> }>
-  : V & { $type: $Type<'app.bsky.richtext.facet', 'main'> } {
+export function isMain<V>(v: V) {
   return is$typed(v, id, 'main')
 }
 
@@ -37,11 +33,7 @@ export interface Mention {
   did: string
 }
 
-export function isMention<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.richtext.facet', 'mention'> }>
-  : V & { $type: $Type<'app.bsky.richtext.facet', 'mention'> } {
+export function isMention<V>(v: V) {
   return is$typed(v, id, 'mention')
 }
 
@@ -59,11 +51,7 @@ export interface Link {
   uri: string
 }
 
-export function isLink<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.richtext.facet', 'link'> }>
-  : V & { $type: $Type<'app.bsky.richtext.facet', 'link'> } {
+export function isLink<V>(v: V) {
   return is$typed(v, id, 'link')
 }
 
@@ -81,11 +69,7 @@ export interface Tag {
   tag: string
 }
 
-export function isTag<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.richtext.facet', 'tag'> }>
-  : V & { $type: $Type<'app.bsky.richtext.facet', 'tag'> } {
+export function isTag<V>(v: V) {
   return is$typed(v, id, 'tag')
 }
 
@@ -104,11 +88,7 @@ export interface ByteSlice {
   byteEnd: number
 }
 
-export function isByteSlice<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.richtext.facet', 'byteSlice'> }>
-  : V & { $type: $Type<'app.bsky.richtext.facet', 'byteSlice'> } {
+export function isByteSlice<V>(v: V) {
   return is$typed(v, id, 'byteSlice')
 }
 

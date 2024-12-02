@@ -25,11 +25,7 @@ export interface ListViewBasic {
   indexedAt?: string
 }
 
-export function isListViewBasic<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'listViewBasic'> }>
-  : V & { $type: $Type<'app.bsky.graph.defs', 'listViewBasic'> } {
+export function isListViewBasic<V>(v: V) {
   return is$typed(v, id, 'listViewBasic')
 }
 
@@ -60,11 +56,7 @@ export interface ListView {
   indexedAt: string
 }
 
-export function isListView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'listView'> }>
-  : V & { $type: $Type<'app.bsky.graph.defs', 'listView'> } {
+export function isListView<V>(v: V) {
   return is$typed(v, id, 'listView')
 }
 
@@ -82,11 +74,7 @@ export interface ListItemView {
   subject: AppBskyActorDefs.ProfileView
 }
 
-export function isListItemView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'listItemView'> }>
-  : V & { $type: $Type<'app.bsky.graph.defs', 'listItemView'> } {
+export function isListItemView<V>(v: V) {
   return is$typed(v, id, 'listItemView')
 }
 
@@ -116,11 +104,7 @@ export interface StarterPackView {
   indexedAt: string
 }
 
-export function isStarterPackView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'starterPackView'> }>
-  : V & { $type: $Type<'app.bsky.graph.defs', 'starterPackView'> } {
+export function isStarterPackView<V>(v: V) {
   return is$typed(v, id, 'starterPackView')
 }
 
@@ -150,11 +134,7 @@ export interface StarterPackViewBasic {
   indexedAt: string
 }
 
-export function isStarterPackViewBasic<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'starterPackViewBasic'> }>
-  : V & { $type: $Type<'app.bsky.graph.defs', 'starterPackViewBasic'> } {
+export function isStarterPackViewBasic<V>(v: V) {
   return is$typed(v, id, 'starterPackViewBasic')
 }
 
@@ -190,11 +170,7 @@ export interface ListViewerState {
   blocked?: string
 }
 
-export function isListViewerState<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'listViewerState'> }>
-  : V & { $type: $Type<'app.bsky.graph.defs', 'listViewerState'> } {
+export function isListViewerState<V>(v: V) {
   return is$typed(v, id, 'listViewerState')
 }
 
@@ -218,11 +194,7 @@ export interface NotFoundActor {
   notFound: true
 }
 
-export function isNotFoundActor<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'notFoundActor'> }>
-  : V & { $type: $Type<'app.bsky.graph.defs', 'notFoundActor'> } {
+export function isNotFoundActor<V>(v: V) {
   return is$typed(v, id, 'notFoundActor')
 }
 
@@ -247,11 +219,7 @@ export interface Relationship {
   followedBy?: string
 }
 
-export function isRelationship<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'relationship'> }>
-  : V & { $type: $Type<'app.bsky.graph.defs', 'relationship'> } {
+export function isRelationship<V>(v: V) {
   return is$typed(v, id, 'relationship')
 }
 

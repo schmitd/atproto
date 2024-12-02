@@ -43,14 +43,7 @@ export interface BatchItem {
   message: ChatBskyConvoDefs.MessageInput
 }
 
-export function isBatchItem<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'chat.bsky.convo.sendMessageBatch', 'batchItem'> }
-    >
-  : V & { $type: $Type<'chat.bsky.convo.sendMessageBatch', 'batchItem'> } {
+export function isBatchItem<V>(v: V) {
   return is$typed(v, id, 'batchItem')
 }
 

@@ -35,11 +35,7 @@ export interface Labels {
   labels: ComAtprotoLabelDefs.Label[]
 }
 
-export function isLabels<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.label.subscribeLabels', 'labels'> }>
-  : V & { $type: $Type<'com.atproto.label.subscribeLabels', 'labels'> } {
+export function isLabels<V>(v: V) {
   return is$typed(v, id, 'labels')
 }
 
@@ -57,11 +53,7 @@ export interface Info {
   message?: string
 }
 
-export function isInfo<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.label.subscribeLabels', 'info'> }>
-  : V & { $type: $Type<'com.atproto.label.subscribeLabels', 'info'> } {
+export function isInfo<V>(v: V) {
   return is$typed(v, id, 'info')
 }
 

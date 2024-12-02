@@ -19,11 +19,7 @@ export interface InviteCode {
   uses: InviteCodeUse[]
 }
 
-export function isInviteCode<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.server.defs', 'inviteCode'> }>
-  : V & { $type: $Type<'com.atproto.server.defs', 'inviteCode'> } {
+export function isInviteCode<V>(v: V) {
   return is$typed(v, id, 'inviteCode')
 }
 
@@ -44,11 +40,7 @@ export interface InviteCodeUse {
   usedAt: string
 }
 
-export function isInviteCodeUse<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.server.defs', 'inviteCodeUse'> }>
-  : V & { $type: $Type<'com.atproto.server.defs', 'inviteCodeUse'> } {
+export function isInviteCodeUse<V>(v: V) {
   return is$typed(v, id, 'inviteCodeUse')
 }
 

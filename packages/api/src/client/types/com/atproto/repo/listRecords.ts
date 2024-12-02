@@ -54,11 +54,7 @@ export interface Record {
   value: { [_ in string]: unknown }
 }
 
-export function isRecord<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'com.atproto.repo.listRecords', 'record'> }>
-  : V & { $type: $Type<'com.atproto.repo.listRecords', 'record'> } {
+export function isRecord<V>(v: V) {
   return is$typed(v, id, 'record')
 }
 

@@ -75,16 +75,7 @@ export interface Notification {
   labels?: ComAtprotoLabelDefs.Label[]
 }
 
-export function isNotification<V>(v: V): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      {
-        $type: $Type<'app.bsky.notification.listNotifications', 'notification'>
-      }
-    >
-  : V & {
-      $type: $Type<'app.bsky.notification.listNotifications', 'notification'>
-    } {
+export function isNotification<V>(v: V) {
   return is$typed(v, id, 'notification')
 }
 

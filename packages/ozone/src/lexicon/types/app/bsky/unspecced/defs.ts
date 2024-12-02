@@ -13,14 +13,7 @@ export interface SkeletonSearchPost {
   uri: string
 }
 
-export function isSkeletonSearchPost<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'app.bsky.unspecced.defs', 'skeletonSearchPost'> }
-    >
-  : V & { $type: $Type<'app.bsky.unspecced.defs', 'skeletonSearchPost'> } {
+export function isSkeletonSearchPost<V>(v: V) {
   return is$typed(v, id, 'skeletonSearchPost')
 }
 
@@ -42,14 +35,7 @@ export interface SkeletonSearchActor {
   did: string
 }
 
-export function isSkeletonSearchActor<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'app.bsky.unspecced.defs', 'skeletonSearchActor'> }
-    >
-  : V & { $type: $Type<'app.bsky.unspecced.defs', 'skeletonSearchActor'> } {
+export function isSkeletonSearchActor<V>(v: V) {
   return is$typed(v, id, 'skeletonSearchActor')
 }
 
@@ -71,16 +57,7 @@ export interface SkeletonSearchStarterPack {
   uri: string
 }
 
-export function isSkeletonSearchStarterPack<V>(v: V): v is V extends {
-  $type?: string
-}
-  ? Extract<
-      V,
-      { $type: $Type<'app.bsky.unspecced.defs', 'skeletonSearchStarterPack'> }
-    >
-  : V & {
-      $type: $Type<'app.bsky.unspecced.defs', 'skeletonSearchStarterPack'>
-    } {
+export function isSkeletonSearchStarterPack<V>(v: V) {
   return is$typed(v, id, 'skeletonSearchStarterPack')
 }
 

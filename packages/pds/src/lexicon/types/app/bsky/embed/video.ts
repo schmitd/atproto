@@ -18,11 +18,7 @@ export interface Main {
   aspectRatio?: AppBskyEmbedDefs.AspectRatio
 }
 
-export function isMain<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.video', 'main'> }>
-  : V & { $type: $Type<'app.bsky.embed.video', 'main'> } {
+export function isMain<V>(v: V) {
   return is$typed(v, id, 'main')
 }
 
@@ -40,11 +36,7 @@ export interface Caption {
   file: BlobRef
 }
 
-export function isCaption<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.video', 'caption'> }>
-  : V & { $type: $Type<'app.bsky.embed.video', 'caption'> } {
+export function isCaption<V>(v: V) {
   return is$typed(v, id, 'caption')
 }
 
@@ -65,11 +57,7 @@ export interface View {
   aspectRatio?: AppBskyEmbedDefs.AspectRatio
 }
 
-export function isView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.video', 'view'> }>
-  : V & { $type: $Type<'app.bsky.embed.video', 'view'> } {
+export function isView<V>(v: V) {
   return is$typed(v, id, 'view')
 }
 

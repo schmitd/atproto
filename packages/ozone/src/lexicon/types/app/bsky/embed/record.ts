@@ -23,11 +23,7 @@ export interface Main {
   record: ComAtprotoRepoStrongRef.Main
 }
 
-export function isMain<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.record', 'main'> }>
-  : V & { $type: $Type<'app.bsky.embed.record', 'main'> } {
+export function isMain<V>(v: V) {
   return is$typed(v, id, 'main')
 }
 
@@ -53,11 +49,7 @@ export interface View {
     | { $type: string }
 }
 
-export function isView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.record', 'view'> }>
-  : V & { $type: $Type<'app.bsky.embed.record', 'view'> } {
+export function isView<V>(v: V) {
   return is$typed(v, id, 'view')
 }
 
@@ -92,11 +84,7 @@ export interface ViewRecord {
   indexedAt: string
 }
 
-export function isViewRecord<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.record', 'viewRecord'> }>
-  : V & { $type: $Type<'app.bsky.embed.record', 'viewRecord'> } {
+export function isViewRecord<V>(v: V) {
   return is$typed(v, id, 'viewRecord')
 }
 
@@ -117,11 +105,7 @@ export interface ViewNotFound {
   notFound: true
 }
 
-export function isViewNotFound<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.record', 'viewNotFound'> }>
-  : V & { $type: $Type<'app.bsky.embed.record', 'viewNotFound'> } {
+export function isViewNotFound<V>(v: V) {
   return is$typed(v, id, 'viewNotFound')
 }
 
@@ -143,11 +127,7 @@ export interface ViewBlocked {
   author: AppBskyFeedDefs.BlockedAuthor
 }
 
-export function isViewBlocked<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.record', 'viewBlocked'> }>
-  : V & { $type: $Type<'app.bsky.embed.record', 'viewBlocked'> } {
+export function isViewBlocked<V>(v: V) {
   return is$typed(v, id, 'viewBlocked')
 }
 
@@ -168,11 +148,7 @@ export interface ViewDetached {
   detached: true
 }
 
-export function isViewDetached<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.embed.record', 'viewDetached'> }>
-  : V & { $type: $Type<'app.bsky.embed.record', 'viewDetached'> } {
+export function isViewDetached<V>(v: V) {
   return is$typed(v, id, 'viewDetached')
 }
 

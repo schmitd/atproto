@@ -53,14 +53,7 @@ export interface RecordBlob {
   recordUri: string
 }
 
-export function isRecordBlob<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<
-      V,
-      { $type: $Type<'com.atproto.repo.listMissingBlobs', 'recordBlob'> }
-    >
-  : V & { $type: $Type<'com.atproto.repo.listMissingBlobs', 'recordBlob'> } {
+export function isRecordBlob<V>(v: V) {
   return is$typed(v, id, 'recordBlob')
 }
 

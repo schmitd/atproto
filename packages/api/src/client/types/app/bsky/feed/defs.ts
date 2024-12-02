@@ -40,11 +40,7 @@ export interface PostView {
   threadgate?: ThreadgateView
 }
 
-export function isPostView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'postView'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'postView'> } {
+export function isPostView<V>(v: V) {
   return is$typed(v, id, 'postView')
 }
 
@@ -67,11 +63,7 @@ export interface ViewerState {
   pinned?: boolean
 }
 
-export function isViewerState<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'viewerState'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'viewerState'> } {
+export function isViewerState<V>(v: V) {
   return is$typed(v, id, 'viewerState')
 }
 
@@ -95,11 +87,7 @@ export interface FeedViewPost {
   feedContext?: string
 }
 
-export function isFeedViewPost<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'feedViewPost'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'feedViewPost'> } {
+export function isFeedViewPost<V>(v: V) {
   return is$typed(v, id, 'feedViewPost')
 }
 
@@ -129,11 +117,7 @@ export interface ReplyRef {
   grandparentAuthor?: AppBskyActorDefs.ProfileViewBasic
 }
 
-export function isReplyRef<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'replyRef'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'replyRef'> } {
+export function isReplyRef<V>(v: V) {
   return is$typed(v, id, 'replyRef')
 }
 
@@ -151,11 +135,7 @@ export interface ReasonRepost {
   indexedAt: string
 }
 
-export function isReasonRepost<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'reasonRepost'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'reasonRepost'> } {
+export function isReasonRepost<V>(v: V) {
   return is$typed(v, id, 'reasonRepost')
 }
 
@@ -174,11 +154,7 @@ export interface ReasonPin {
   $type?: $Type<'app.bsky.feed.defs', 'reasonPin'>
 }
 
-export function isReasonPin<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'reasonPin'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'reasonPin'> } {
+export function isReasonPin<V>(v: V) {
   return is$typed(v, id, 'reasonPin')
 }
 
@@ -206,11 +182,7 @@ export interface ThreadViewPost {
   )[]
 }
 
-export function isThreadViewPost<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'threadViewPost'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'threadViewPost'> } {
+export function isThreadViewPost<V>(v: V) {
   return is$typed(v, id, 'threadViewPost')
 }
 
@@ -233,11 +205,7 @@ export interface NotFoundPost {
   notFound: true
 }
 
-export function isNotFoundPost<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'notFoundPost'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'notFoundPost'> } {
+export function isNotFoundPost<V>(v: V) {
   return is$typed(v, id, 'notFoundPost')
 }
 
@@ -259,11 +227,7 @@ export interface BlockedPost {
   author: BlockedAuthor
 }
 
-export function isBlockedPost<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'blockedPost'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'blockedPost'> } {
+export function isBlockedPost<V>(v: V) {
   return is$typed(v, id, 'blockedPost')
 }
 
@@ -284,11 +248,7 @@ export interface BlockedAuthor {
   viewer?: AppBskyActorDefs.ViewerState
 }
 
-export function isBlockedAuthor<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'blockedAuthor'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'blockedAuthor'> } {
+export function isBlockedAuthor<V>(v: V) {
   return is$typed(v, id, 'blockedAuthor')
 }
 
@@ -320,11 +280,7 @@ export interface GeneratorView {
   indexedAt: string
 }
 
-export function isGeneratorView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'generatorView'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'generatorView'> } {
+export function isGeneratorView<V>(v: V) {
   return is$typed(v, id, 'generatorView')
 }
 
@@ -344,11 +300,7 @@ export interface GeneratorViewerState {
   like?: string
 }
 
-export function isGeneratorViewerState<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'generatorViewerState'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'generatorViewerState'> } {
+export function isGeneratorViewerState<V>(v: V) {
   return is$typed(v, id, 'generatorViewerState')
 }
 
@@ -376,11 +328,7 @@ export interface SkeletonFeedPost {
   feedContext?: string
 }
 
-export function isSkeletonFeedPost<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'skeletonFeedPost'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'skeletonFeedPost'> } {
+export function isSkeletonFeedPost<V>(v: V) {
   return is$typed(v, id, 'skeletonFeedPost')
 }
 
@@ -402,11 +350,7 @@ export interface SkeletonReasonRepost {
   repost: string
 }
 
-export function isSkeletonReasonRepost<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'skeletonReasonRepost'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'skeletonReasonRepost'> } {
+export function isSkeletonReasonRepost<V>(v: V) {
   return is$typed(v, id, 'skeletonReasonRepost')
 }
 
@@ -427,11 +371,7 @@ export interface SkeletonReasonPin {
   $type?: $Type<'app.bsky.feed.defs', 'skeletonReasonPin'>
 }
 
-export function isSkeletonReasonPin<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'skeletonReasonPin'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'skeletonReasonPin'> } {
+export function isSkeletonReasonPin<V>(v: V) {
   return is$typed(v, id, 'skeletonReasonPin')
 }
 
@@ -456,11 +396,7 @@ export interface ThreadgateView {
   lists?: AppBskyGraphDefs.ListViewBasic[]
 }
 
-export function isThreadgateView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'threadgateView'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'threadgateView'> } {
+export function isThreadgateView<V>(v: V) {
   return is$typed(v, id, 'threadgateView')
 }
 
@@ -498,11 +434,7 @@ export interface Interaction {
   feedContext?: string
 }
 
-export function isInteraction<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.defs', 'interaction'> }>
-  : V & { $type: $Type<'app.bsky.feed.defs', 'interaction'> } {
+export function isInteraction<V>(v: V) {
   return is$typed(v, id, 'interaction')
 }
 

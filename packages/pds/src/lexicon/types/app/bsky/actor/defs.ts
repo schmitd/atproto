@@ -23,11 +23,7 @@ export interface ProfileViewBasic {
   createdAt?: string
 }
 
-export function isProfileViewBasic<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'profileViewBasic'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'profileViewBasic'> } {
+export function isProfileViewBasic<V>(v: V) {
   return is$typed(v, id, 'profileViewBasic')
 }
 
@@ -58,11 +54,7 @@ export interface ProfileView {
   labels?: ComAtprotoLabelDefs.Label[]
 }
 
-export function isProfileView<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'profileView'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'profileView'> } {
+export function isProfileView<V>(v: V) {
   return is$typed(v, id, 'profileView')
 }
 
@@ -97,11 +89,7 @@ export interface ProfileViewDetailed {
   pinnedPost?: ComAtprotoRepoStrongRef.Main
 }
 
-export function isProfileViewDetailed<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'profileViewDetailed'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'profileViewDetailed'> } {
+export function isProfileViewDetailed<V>(v: V) {
   return is$typed(v, id, 'profileViewDetailed')
 }
 
@@ -127,11 +115,7 @@ export interface ProfileAssociated {
   chat?: ProfileAssociatedChat
 }
 
-export function isProfileAssociated<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'profileAssociated'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'profileAssociated'> } {
+export function isProfileAssociated<V>(v: V) {
   return is$typed(v, id, 'profileAssociated')
 }
 
@@ -153,11 +137,7 @@ export interface ProfileAssociatedChat {
   allowIncoming: 'all' | 'none' | 'following' | (string & {})
 }
 
-export function isProfileAssociatedChat<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'profileAssociatedChat'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'profileAssociatedChat'> } {
+export function isProfileAssociatedChat<V>(v: V) {
   return is$typed(v, id, 'profileAssociatedChat')
 }
 
@@ -187,11 +167,7 @@ export interface ViewerState {
   knownFollowers?: KnownFollowers
 }
 
-export function isViewerState<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'viewerState'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'viewerState'> } {
+export function isViewerState<V>(v: V) {
   return is$typed(v, id, 'viewerState')
 }
 
@@ -213,11 +189,7 @@ export interface KnownFollowers {
   followers: ProfileViewBasic[]
 }
 
-export function isKnownFollowers<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'knownFollowers'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'knownFollowers'> } {
+export function isKnownFollowers<V>(v: V) {
   return is$typed(v, id, 'knownFollowers')
 }
 
@@ -255,11 +227,7 @@ export interface AdultContentPref {
   enabled: boolean
 }
 
-export function isAdultContentPref<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'adultContentPref'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'adultContentPref'> } {
+export function isAdultContentPref<V>(v: V) {
   return is$typed(v, id, 'adultContentPref')
 }
 
@@ -284,11 +252,7 @@ export interface ContentLabelPref {
   visibility: 'ignore' | 'show' | 'warn' | 'hide' | (string & {})
 }
 
-export function isContentLabelPref<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'contentLabelPref'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'contentLabelPref'> } {
+export function isContentLabelPref<V>(v: V) {
   return is$typed(v, id, 'contentLabelPref')
 }
 
@@ -313,11 +277,7 @@ export interface SavedFeed {
   pinned: boolean
 }
 
-export function isSavedFeed<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'savedFeed'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'savedFeed'> } {
+export function isSavedFeed<V>(v: V) {
   return is$typed(v, id, 'savedFeed')
 }
 
@@ -334,11 +294,7 @@ export interface SavedFeedsPrefV2 {
   items: SavedFeed[]
 }
 
-export function isSavedFeedsPrefV2<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'savedFeedsPrefV2'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'savedFeedsPrefV2'> } {
+export function isSavedFeedsPrefV2<V>(v: V) {
   return is$typed(v, id, 'savedFeedsPrefV2')
 }
 
@@ -362,11 +318,7 @@ export interface SavedFeedsPref {
   timelineIndex?: number
 }
 
-export function isSavedFeedsPref<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'savedFeedsPref'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'savedFeedsPref'> } {
+export function isSavedFeedsPref<V>(v: V) {
   return is$typed(v, id, 'savedFeedsPref')
 }
 
@@ -389,11 +341,7 @@ export interface PersonalDetailsPref {
   birthDate?: string
 }
 
-export function isPersonalDetailsPref<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'personalDetailsPref'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'personalDetailsPref'> } {
+export function isPersonalDetailsPref<V>(v: V) {
   return is$typed(v, id, 'personalDetailsPref')
 }
 
@@ -426,11 +374,7 @@ export interface FeedViewPref {
   hideQuotePosts?: boolean
 }
 
-export function isFeedViewPref<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'feedViewPref'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'feedViewPref'> } {
+export function isFeedViewPref<V>(v: V) {
   return is$typed(v, id, 'feedViewPref')
 }
 
@@ -459,11 +403,7 @@ export interface ThreadViewPref {
   prioritizeFollowedUsers?: boolean
 }
 
-export function isThreadViewPref<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'threadViewPref'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'threadViewPref'> } {
+export function isThreadViewPref<V>(v: V) {
   return is$typed(v, id, 'threadViewPref')
 }
 
@@ -486,11 +426,7 @@ export interface InterestsPref {
   tags: string[]
 }
 
-export function isInterestsPref<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'interestsPref'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'interestsPref'> } {
+export function isInterestsPref<V>(v: V) {
   return is$typed(v, id, 'interestsPref')
 }
 
@@ -521,11 +457,7 @@ export interface MutedWord {
   expiresAt?: string
 }
 
-export function isMutedWord<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'mutedWord'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'mutedWord'> } {
+export function isMutedWord<V>(v: V) {
   return is$typed(v, id, 'mutedWord')
 }
 
@@ -543,11 +475,7 @@ export interface MutedWordsPref {
   items: MutedWord[]
 }
 
-export function isMutedWordsPref<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'mutedWordsPref'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'mutedWordsPref'> } {
+export function isMutedWordsPref<V>(v: V) {
   return is$typed(v, id, 'mutedWordsPref')
 }
 
@@ -570,11 +498,7 @@ export interface HiddenPostsPref {
   items: string[]
 }
 
-export function isHiddenPostsPref<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'hiddenPostsPref'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'hiddenPostsPref'> } {
+export function isHiddenPostsPref<V>(v: V) {
   return is$typed(v, id, 'hiddenPostsPref')
 }
 
@@ -596,11 +520,7 @@ export interface LabelersPref {
   labelers: LabelerPrefItem[]
 }
 
-export function isLabelersPref<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'labelersPref'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'labelersPref'> } {
+export function isLabelersPref<V>(v: V) {
   return is$typed(v, id, 'labelersPref')
 }
 
@@ -620,11 +540,7 @@ export interface LabelerPrefItem {
   did: string
 }
 
-export function isLabelerPrefItem<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'labelerPrefItem'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'labelerPrefItem'> } {
+export function isLabelerPrefItem<V>(v: V) {
   return is$typed(v, id, 'labelerPrefItem')
 }
 
@@ -651,11 +567,7 @@ export interface BskyAppStatePref {
   nuxs?: Nux[]
 }
 
-export function isBskyAppStatePref<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'bskyAppStatePref'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'bskyAppStatePref'> } {
+export function isBskyAppStatePref<V>(v: V) {
   return is$typed(v, id, 'bskyAppStatePref')
 }
 
@@ -678,11 +590,7 @@ export interface BskyAppProgressGuide {
   guide: string
 }
 
-export function isBskyAppProgressGuide<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'bskyAppProgressGuide'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'bskyAppProgressGuide'> } {
+export function isBskyAppProgressGuide<V>(v: V) {
   return is$typed(v, id, 'bskyAppProgressGuide')
 }
 
@@ -710,11 +618,7 @@ export interface Nux {
   expiresAt?: string
 }
 
-export function isNux<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.actor.defs', 'nux'> }>
-  : V & { $type: $Type<'app.bsky.actor.defs', 'nux'> } {
+export function isNux<V>(v: V) {
   return is$typed(v, id, 'nux')
 }
 

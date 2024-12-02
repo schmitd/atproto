@@ -21,11 +21,7 @@ export interface JobStatus {
   message?: string
 }
 
-export function isJobStatus<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.video.defs', 'jobStatus'> }>
-  : V & { $type: $Type<'app.bsky.video.defs', 'jobStatus'> } {
+export function isJobStatus<V>(v: V) {
   return is$typed(v, id, 'jobStatus')
 }
 

@@ -24,11 +24,7 @@ export interface Member {
     | (string & {})
 }
 
-export function isMember<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.team.defs', 'member'> }>
-  : V & { $type: $Type<'tools.ozone.team.defs', 'member'> } {
+export function isMember<V>(v: V) {
   return is$typed(v, id, 'member')
 }
 

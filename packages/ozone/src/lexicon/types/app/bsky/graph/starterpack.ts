@@ -22,11 +22,7 @@ export interface Record {
   [k: string]: unknown
 }
 
-export function isRecord<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.graph.starterpack', 'main'> }>
-  : V & { $type: $Type<'app.bsky.graph.starterpack', 'main'> } {
+export function isRecord<V>(v: V) {
   return is$typed(v, id, 'main')
 }
 
@@ -43,11 +39,7 @@ export interface FeedItem {
   uri: string
 }
 
-export function isFeedItem<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.graph.starterpack', 'feedItem'> }>
-  : V & { $type: $Type<'app.bsky.graph.starterpack', 'feedItem'> } {
+export function isFeedItem<V>(v: V) {
   return is$typed(v, id, 'feedItem')
 }
 

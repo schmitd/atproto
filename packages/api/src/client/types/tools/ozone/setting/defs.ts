@@ -26,11 +26,7 @@ export interface Option {
   lastUpdatedBy: string
 }
 
-export function isOption<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'tools.ozone.setting.defs', 'option'> }>
-  : V & { $type: $Type<'tools.ozone.setting.defs', 'option'> } {
+export function isOption<V>(v: V) {
   return is$typed(v, id, 'option')
 }
 

@@ -39,11 +39,7 @@ export interface Feed {
   uri: string
 }
 
-export function isFeed<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.describeFeedGenerator', 'feed'> }>
-  : V & { $type: $Type<'app.bsky.feed.describeFeedGenerator', 'feed'> } {
+export function isFeed<V>(v: V) {
   return is$typed(v, id, 'feed')
 }
 
@@ -61,11 +57,7 @@ export interface Links {
   termsOfService?: string
 }
 
-export function isLinks<V>(
-  v: V,
-): v is V extends { $type?: string }
-  ? Extract<V, { $type: $Type<'app.bsky.feed.describeFeedGenerator', 'links'> }>
-  : V & { $type: $Type<'app.bsky.feed.describeFeedGenerator', 'links'> } {
+export function isLinks<V>(v: V) {
   return is$typed(v, id, 'links')
 }
 
