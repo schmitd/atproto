@@ -154,7 +154,7 @@ function checkMutedWords(
 
   const postAuthor = subject.author
 
-  if (AppBskyFeedPost.isRecord(subject.record)) {
+  if (AppBskyFeedPost.isValidRecord(subject.record)) {
     // post text
     if (
       hasMutedWord({
@@ -189,16 +189,17 @@ function checkMutedWords(
     }
   }
 
-  if (subject.embed) {
+  const { embed } = subject
+  if (embed) {
     // quote post
     if (
-      (AppBskyEmbedRecord.isView(subject.embed) ||
-        AppBskyEmbedRecordWithMedia.isView(subject.embed)) &&
-      AppBskyEmbedRecord.isViewRecord(subject.embed.record)
+      (AppBskyEmbedRecord.isView(embed) ||
+        AppBskyEmbedRecordWithMedia.isView(embed)) &&
+      AppBskyEmbedRecord.isViewRecord(embed.record)
     ) {
-      if (AppBskyFeedPost.isRecord(subject.embed.record.value)) {
-        const embeddedPost = subject.embed.record.value
-        const embedAuthor = subject.embed.record.author
+      if (AppBskyFeedPost.isValidRecord(embed.record.value)) {
+        const embeddedPost = embed.record.value
+        const embedAuthor = embed.record.author
 
         // quoted post text
         if (
@@ -282,8 +283,8 @@ function checkMutedWords(
       }
     }
     // link card
-    else if (AppBskyEmbedExternal.isView(subject.embed)) {
-      const { external } = subject.embed
+    else if (AppBskyEmbedExternal.isView(embed)) {
+      const { external } = embed
       if (
         hasMutedWord({
           mutedWords,
@@ -297,14 +298,14 @@ function checkMutedWords(
     }
     // quote post with media
     else if (
-      AppBskyEmbedRecordWithMedia.isView(subject.embed) &&
-      AppBskyEmbedRecord.isViewRecord(subject.embed.record.record)
+      AppBskyEmbedRecordWithMedia.isView(embed) &&
+      AppBskyEmbedRecord.isViewRecord(embed.record.record)
     ) {
-      const embedAuthor = subject.embed.record.record.author
+      const embedAuthor = embed.record.record.author
 
       // quoted post text
-      if (AppBskyFeedPost.isRecord(subject.embed.record.record.value)) {
-        const post = subject.embed.record.record.value
+      if (AppBskyFeedPost.isValidRecord(embed.record.record.value)) {
+        const post = embed.record.record.value
         if (
           hasMutedWord({
             mutedWords,
@@ -320,13 +321,13 @@ function checkMutedWords(
       }
 
       // quoted post images
-      if (AppBskyEmbedImages.isView(subject.embed.media)) {
-        for (const image of subject.embed.media.images) {
+      if (AppBskyEmbedImages.isView(embed.media)) {
+        for (const image of embed.media.images) {
           if (
             hasMutedWord({
               mutedWords,
               text: image.alt,
-              languages: AppBskyFeedPost.isRecord(subject.record)
+              languages: AppBskyFeedPost.isValidRecord(subject.record)
                 ? subject.record.langs
                 : [],
               actor: embedAuthor,
@@ -337,8 +338,8 @@ function checkMutedWords(
         }
       }
 
-      if (AppBskyEmbedExternal.isView(subject.embed.media)) {
-        const { external } = subject.embed.media
+      if (AppBskyEmbedExternal.isView(embed.media)) {
+        const { external } = embed.media
         if (
           hasMutedWord({
             mutedWords,

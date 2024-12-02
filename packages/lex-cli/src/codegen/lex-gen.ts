@@ -101,7 +101,6 @@ export function genObject(
     addTypeProperty?: boolean
   } = {},
 ) {
-  const hash = getHash(lexUri)
   const iface = file.addInterface({
     name: ifaceName,
     isExported: true,
@@ -112,10 +111,7 @@ export function genObject(
     //= $type: uri
     iface.addProperty({
       name: `$type?`,
-      type:
-        hash === 'main'
-          ? `'${stripHash(lexUri)}' | '${lexUri}'`
-          : `'${lexUri}'`,
+      type: `$Type<${JSON.stringify(stripHash(stripScheme(lexUri)))}, ${JSON.stringify(getHash(lexUri))}>`,
     })
   }
 
@@ -139,7 +135,7 @@ export function genObject(
               )
             : [refToType(propDef.ref, stripScheme(stripHash(lexUri)), imports)]
         if (propDef.type === 'union' && !propDef.closed) {
-          types.push('$Typed<{ [k: string]: unknown }>')
+          types.push('{ $type: string }')
         }
         iface.addProperty({
           name: `${propKey}${req ? '' : '?'}`,
@@ -171,7 +167,7 @@ export function genObject(
                 `$Typed<${refToType(ref, stripScheme(stripHash(lexUri)), imports)}>`,
             )
             if (!propDef.items.closed) {
-              types.push('$Typed<{ [k: string]: unknown }>')
+              types.push('{ $type: string }')
             }
             propAst = iface.addProperty({
               name: `${propKey}${req ? '' : '?'}`,
@@ -256,7 +252,7 @@ export function genArray(
         `$Typed<${refToType(ref, stripScheme(stripHash(lexUri)), imports)}>`,
     )
     if (!def.items.closed) {
-      types.push('$Typed<{ [k: string]: unknown }>')
+      types.push('{ $type: string }')
     }
     file.addTypeAlias({
       name: toTitleCase(getHash(lexUri)),
@@ -357,7 +353,7 @@ export function genXrpcInput(
             ]
 
       if (def.input.schema.type === 'union' && !def.input.schema.closed) {
-        types.push('$Typed<{ [k: string]: unknown }>')
+        types.push('{ $type: string }')
       }
       file.addTypeAlias({
         name: 'InputSchema',
@@ -413,7 +409,7 @@ export function genXrpcOutput(
             )
           : [refToType(schema.ref, stripScheme(stripHash(lexUri)), imports)]
       if (schema.type === 'union' && !schema.closed) {
-        types.push('$Typed<{ [k: string]: unknown }>')
+        types.push('{ $type: string }')
       }
       file.addTypeAlias({
         name: 'OutputSchema',
@@ -437,25 +433,41 @@ export function genObjHelpers(
   const hash = getHash(lexUri)
 
   //= export function is{X}(v: unknown): v is X & { $type: NS } {...}
+
+  const $type = `$Type<${JSON.stringify(stripHash(stripScheme(lexUri)))}, ${JSON.stringify(getHash(lexUri))}>`
+
+  const isX = toCamelCase(`is-${ifaceName}`)
   file
     .addFunction({
-      name: toCamelCase(`is-${ifaceName}`),
-      parameters: [{ name: `v`, type: `unknown` }],
-      returnType: `v is $Typed<${ifaceName}>`,
+      name: isX,
+      typeParameters: [{ name: `V` }],
+      parameters: [{ name: `v`, type: `V` }],
+      returnType: `v is V extends { $type?: string } ? Extract<V, { $type: ${$type} }> : V & { $type: ${$type} }`,
       isExported: true,
     })
     .setBodyText(`return is$typed(v, id, ${JSON.stringify(hash)})`)
 
+  const validateX = toCamelCase(`validate-${ifaceName}`)
   //= export function validate{X}(v: unknown): ValidationResult<X> {...}
   file
     .addFunction({
-      name: toCamelCase(`validate-${ifaceName}`),
+      name: validateX,
       parameters: [{ name: `v`, type: `unknown` }],
       isExported: true,
     })
     .setBodyText(
       `return lexicons.validate(\`\${id}#${hash}\`, v) as ValidationResult<${ifaceName}>`,
     )
+
+  const isValidX = toCamelCase(`is-valid-${ifaceName}`)
+  file
+    .addFunction({
+      name: `${isValidX}<V>`,
+      parameters: [{ name: `v`, type: `V` }],
+      returnType: `v is V & $Typed<${ifaceName}>`,
+      isExported: true,
+    })
+    .setBodyText(`return ${isX}(v) && ${validateX}(v).success`)
 }
 
 export function stripScheme(uri: string): string {

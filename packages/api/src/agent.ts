@@ -1,11 +1,6 @@
 import { TID } from '@atproto/common-web'
 import { AtUri, ensureValidDid } from '@atproto/syntax'
-import {
-  buildFetchHandler,
-  BuildFetchHandlerOptions,
-  FetchHandler,
-  XrpcClient,
-} from '@atproto/xrpc'
+import { buildFetchHandler, FetchHandler, XrpcClient } from '@atproto/xrpc'
 import AwaitLock from 'await-lock'
 import {
   AppBskyActorDefs,
@@ -20,6 +15,7 @@ import {
 } from './client/index'
 import { schemas } from './client/lexicons'
 import { MutedWord, Nux } from './client/types/app/bsky/actor/defs'
+import { $Typed } from './client/util'
 import { BSKY_LABELER_DID } from './const'
 import { interpretLabelValueDefinitions } from './moderation'
 import { DEFAULT_LABEL_SETTINGS } from './moderation/const/labels'
@@ -44,10 +40,9 @@ import {
   isDid,
   sanitizeMutedWordValue,
   savedFeedsToUriArrays,
-  validateSavedFeed,
   validateNux,
+  validateSavedFeed,
 } from './util'
-import { $Typed } from './client/util'
 
 const FEED_VIEW_PREF_DEFAULTS = {
   hideReplies: false,
@@ -994,7 +989,7 @@ export class Agent extends XrpcClient {
           labelers: [],
         }
 
-        if (AppBskyActorDefs.isLabelersPref(labelersPref)) {
+        if (AppBskyActorDefs.isValidLabelersPref(labelersPref)) {
           let labelerPrefItem = labelersPref.labelers.find(
             (labeler) => labeler.did === did,
           )

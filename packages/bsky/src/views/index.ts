@@ -23,7 +23,7 @@ import {
   ThreadgateView,
   isPostView,
 } from '../lexicon/types/app/bsky/feed/defs'
-import { isRecord as isPostRecord } from '../lexicon/types/app/bsky/feed/post'
+import { isValidRecord as isValidPostRecord } from '../lexicon/types/app/bsky/feed/post'
 import {
   ListView,
   ListViewBasic,
@@ -38,7 +38,7 @@ import {
 } from './util'
 import { uriToDid as creatorFromUri, safePinnedPost } from '../util/uris'
 import { isListRule } from '../lexicon/types/app/bsky/feed/threadgate'
-import { isSelfLabels } from '../lexicon/types/com/atproto/label/defs'
+import { isValidSelfLabels } from '../lexicon/types/com/atproto/label/defs'
 import {
   Embed,
   EmbedBlocked,
@@ -462,7 +462,7 @@ export class Views {
   }): Label[] {
     const { uri, cid, record } = details
     if (!uri || !cid || !record) return []
-    if (!isSelfLabels(record.labels)) return []
+    if (!isValidSelfLabels(record.labels)) return []
     const src = creatorFromUri(uri) // record creator
     const cts =
       typeof record.createdAt === 'string'
@@ -719,7 +719,7 @@ export class Views {
     let grandparentAuthor: ProfileViewBasic | undefined
     if (
       isPostView(parent) &&
-      isPostRecord(parent.record) &&
+      isValidPostRecord(parent.record) &&
       parent.record.reply
     ) {
       grandparentAuthor = this.profileBasic(

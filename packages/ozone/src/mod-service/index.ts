@@ -55,6 +55,7 @@ import { httpLogger as log } from '../logger'
 import { OzoneConfig } from '../config'
 import { LABELER_HEADER_NAME, ParsedLabelers } from '../util'
 import { ids } from '../lexicon/lexicons'
+import { ReasonType } from '../lexicon/types/com/atproto/moderation/defs'
 
 export type ModerationServiceCreator = (db: Database) => ModerationService
 
@@ -437,7 +438,10 @@ export class ModerationService {
     const modEvent = await this.db.db
       .insertInto('moderation_event')
       .values({
-        comment: event.comment ? `${event.comment}` : null,
+        comment:
+          'comment' in event && typeof event.comment === 'string'
+            ? event.comment || null
+            : null,
         action: event.$type as ModerationEvent['action'],
         createdAt: createdAt.toISOString(),
         createdBy,
@@ -750,7 +754,7 @@ export class ModerationService {
   }
 
   async report(info: {
-    reasonType: NonNullable<ModerationEventRow['meta']>['reportType']
+    reasonType: ReasonType
     reason?: string
     subject: ModSubject
     reportedBy: string

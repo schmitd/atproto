@@ -198,7 +198,7 @@ export class LocalViewer {
   }
 
   async formatSimpleEmbed(
-    embed: EmbedImages | EmbedExternal,
+    embed: $Typed<EmbedImages> | $Typed<EmbedExternal>,
   ): Promise<$Typed<EmbedImagesView> | $Typed<EmbedExternalView>> {
     if (isEmbedImages(embed)) {
       const images = embed.images.map((img) => ({
@@ -225,6 +225,7 @@ export class LocalViewer {
         },
       }
     } else {
+      // @ts-expect-error
       throw new TypeError(`Unexpected embed type: ${embed.$type}`)
     }
   }

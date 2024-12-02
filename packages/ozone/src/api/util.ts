@@ -8,6 +8,7 @@ import {
   REASONSEXUAL,
   REASONVIOLATION,
   REASONAPPEAL,
+  ReasonType,
 } from '../lexicon/types/com/atproto/moderation/defs'
 import { AccountView } from '../lexicon/types/com/atproto/admin/defs'
 import {
@@ -122,7 +123,7 @@ export const addAccountInfoToRepoView = (
 
 export const getReasonType = (reasonType: ReportInput['reasonType']) => {
   if (reasonTypes.has(reasonType)) {
-    return reasonType as NonNullable<ModerationEvent['meta']>['reportType']
+    return reasonType
   }
   throw new InvalidRequestError('Invalid reason type')
 }
@@ -144,7 +145,7 @@ export const getReviewState = (reviewState?: string) => {
 
 const reviewStates = new Set([REVIEWCLOSED, REVIEWESCALATED, REVIEWOPEN])
 
-const reasonTypes = new Set([
+const reasonTypes = new Set<ReasonType>([
   REASONOTHER,
   REASONSPAM,
   REASONMISLEADING,
