@@ -45,15 +45,13 @@ export function validateSkeletonSearchActor(v: unknown) {
 }
 
 export interface SkeletonSearchStarterPack {
+  $type?: 'app.bsky.unspecced.defs#skeletonSearchStarterPack'
   uri: string
-  [k: string]: unknown
 }
 
 export function isSkeletonSearchStarterPack(
   v: unknown,
-): v is SkeletonSearchStarterPack & {
-  $type: $Type<'app.bsky.unspecced.defs', 'skeletonSearchStarterPack'>
-} {
+): v is $Typed<SkeletonSearchStarterPack> {
   return is$typed(v, id, 'skeletonSearchStarterPack')
 }
 
