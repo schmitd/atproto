@@ -55,16 +55,24 @@ export type Handler<HA extends HandlerAuth = never> = (
 ) => Promise<HandlerOutput> | HandlerOutput
 
 export interface Like {
-  $type?: 'app.bsky.feed.getLikes#like'
+  $type?: $Type<'app.bsky.feed.getLikes', 'like'>
   indexedAt: string
   createdAt: string
   actor: AppBskyActorDefs.ProfileView
 }
 
-export function isLike(v: unknown): v is $Typed<Like> {
+export function isLike<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.getLikes', 'like'> }>
+  : V & { $type: $Type<'app.bsky.feed.getLikes', 'like'> } {
   return is$typed(v, id, 'like')
 }
 
 export function validateLike(v: unknown) {
   return lexicons.validate(`${id}#like`, v) as ValidationResult<Like>
+}
+
+export function isValidLike<V>(v: V): v is V & $Typed<Like> {
+  return isLike(v) && validateLike(v).success
 }

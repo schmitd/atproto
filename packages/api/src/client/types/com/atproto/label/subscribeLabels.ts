@@ -11,12 +11,16 @@ import * as ComAtprotoLabelDefs from './defs'
 export const id = 'com.atproto.label.subscribeLabels'
 
 export interface Labels {
-  $type?: 'com.atproto.label.subscribeLabels#labels'
+  $type?: $Type<'com.atproto.label.subscribeLabels', 'labels'>
   seq: number
   labels: ComAtprotoLabelDefs.Label[]
 }
 
-export function isLabels(v: unknown): v is $Typed<Labels> {
+export function isLabels<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.label.subscribeLabels', 'labels'> }>
+  : V & { $type: $Type<'com.atproto.label.subscribeLabels', 'labels'> } {
   return is$typed(v, id, 'labels')
 }
 
@@ -24,16 +28,28 @@ export function validateLabels(v: unknown) {
   return lexicons.validate(`${id}#labels`, v) as ValidationResult<Labels>
 }
 
+export function isValidLabels<V>(v: V): v is V & $Typed<Labels> {
+  return isLabels(v) && validateLabels(v).success
+}
+
 export interface Info {
-  $type?: 'com.atproto.label.subscribeLabels#info'
+  $type?: $Type<'com.atproto.label.subscribeLabels', 'info'>
   name: 'OutdatedCursor' | (string & {})
   message?: string
 }
 
-export function isInfo(v: unknown): v is $Typed<Info> {
+export function isInfo<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.label.subscribeLabels', 'info'> }>
+  : V & { $type: $Type<'com.atproto.label.subscribeLabels', 'info'> } {
   return is$typed(v, id, 'info')
 }
 
 export function validateInfo(v: unknown) {
   return lexicons.validate(`${id}#info`, v) as ValidationResult<Info>
+}
+
+export function isValidInfo<V>(v: V): v is V & $Typed<Info> {
+  return isInfo(v) && validateInfo(v).success
 }

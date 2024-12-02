@@ -40,12 +40,27 @@ export function toKnownErr(e: any) {
 }
 
 export interface RelatedAccount {
-  $type?: 'tools.ozone.signature.findRelatedAccounts#relatedAccount'
+  $type?: $Type<'tools.ozone.signature.findRelatedAccounts', 'relatedAccount'>
   account: ComAtprotoAdminDefs.AccountView
   similarities?: ToolsOzoneSignatureDefs.SigDetail[]
 }
 
-export function isRelatedAccount(v: unknown): v is $Typed<RelatedAccount> {
+export function isRelatedAccount<V>(v: V): v is V extends { $type?: string }
+  ? Extract<
+      V,
+      {
+        $type: $Type<
+          'tools.ozone.signature.findRelatedAccounts',
+          'relatedAccount'
+        >
+      }
+    >
+  : V & {
+      $type: $Type<
+        'tools.ozone.signature.findRelatedAccounts',
+        'relatedAccount'
+      >
+    } {
   return is$typed(v, id, 'relatedAccount')
 }
 
@@ -54,4 +69,10 @@ export function validateRelatedAccount(v: unknown) {
     `${id}#relatedAccount`,
     v,
   ) as ValidationResult<RelatedAccount>
+}
+
+export function isValidRelatedAccount<V>(
+  v: V,
+): v is V & $Typed<RelatedAccount> {
+  return isRelatedAccount(v) && validateRelatedAccount(v).success
 }

@@ -52,12 +52,16 @@ export type Handler<HA extends HandlerAuth = never> = (
 ) => Promise<HandlerOutput> | HandlerOutput
 
 export interface Links {
-  $type?: 'com.atproto.server.describeServer#links'
+  $type?: $Type<'com.atproto.server.describeServer', 'links'>
   privacyPolicy?: string
   termsOfService?: string
 }
 
-export function isLinks(v: unknown): v is $Typed<Links> {
+export function isLinks<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.server.describeServer', 'links'> }>
+  : V & { $type: $Type<'com.atproto.server.describeServer', 'links'> } {
   return is$typed(v, id, 'links')
 }
 
@@ -65,15 +69,27 @@ export function validateLinks(v: unknown) {
   return lexicons.validate(`${id}#links`, v) as ValidationResult<Links>
 }
 
+export function isValidLinks<V>(v: V): v is V & $Typed<Links> {
+  return isLinks(v) && validateLinks(v).success
+}
+
 export interface Contact {
-  $type?: 'com.atproto.server.describeServer#contact'
+  $type?: $Type<'com.atproto.server.describeServer', 'contact'>
   email?: string
 }
 
-export function isContact(v: unknown): v is $Typed<Contact> {
+export function isContact<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.server.describeServer', 'contact'> }>
+  : V & { $type: $Type<'com.atproto.server.describeServer', 'contact'> } {
   return is$typed(v, id, 'contact')
 }
 
 export function validateContact(v: unknown) {
   return lexicons.validate(`${id}#contact`, v) as ValidationResult<Contact>
+}
+
+export function isValidContact<V>(v: V): v is V & $Typed<Contact> {
+  return isContact(v) && validateContact(v).success
 }

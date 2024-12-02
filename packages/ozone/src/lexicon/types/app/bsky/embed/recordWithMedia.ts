@@ -13,18 +13,20 @@ import * as AppBskyEmbedExternal from './external'
 export const id = 'app.bsky.embed.recordWithMedia'
 
 export interface Main {
-  $type?:
-    | 'app.bsky.embed.recordWithMedia'
-    | 'app.bsky.embed.recordWithMedia#main'
+  $type?: $Type<'app.bsky.embed.recordWithMedia', 'main'>
   record: AppBskyEmbedRecord.Main
   media:
     | $Typed<AppBskyEmbedImages.Main>
     | $Typed<AppBskyEmbedVideo.Main>
     | $Typed<AppBskyEmbedExternal.Main>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
 }
 
-export function isMain(v: unknown): v is $Typed<Main> {
+export function isMain<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.embed.recordWithMedia', 'main'> }>
+  : V & { $type: $Type<'app.bsky.embed.recordWithMedia', 'main'> } {
   return is$typed(v, id, 'main')
 }
 
@@ -32,20 +34,32 @@ export function validateMain(v: unknown) {
   return lexicons.validate(`${id}#main`, v) as ValidationResult<Main>
 }
 
+export function isValidMain<V>(v: V): v is V & $Typed<Main> {
+  return isMain(v) && validateMain(v).success
+}
+
 export interface View {
-  $type?: 'app.bsky.embed.recordWithMedia#view'
+  $type?: $Type<'app.bsky.embed.recordWithMedia', 'view'>
   record: AppBskyEmbedRecord.View
   media:
     | $Typed<AppBskyEmbedImages.View>
     | $Typed<AppBskyEmbedVideo.View>
     | $Typed<AppBskyEmbedExternal.View>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
 }
 
-export function isView(v: unknown): v is $Typed<View> {
+export function isView<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.embed.recordWithMedia', 'view'> }>
+  : V & { $type: $Type<'app.bsky.embed.recordWithMedia', 'view'> } {
   return is$typed(v, id, 'view')
 }
 
 export function validateView(v: unknown) {
   return lexicons.validate(`${id}#view`, v) as ValidationResult<View>
+}
+
+export function isValidView<V>(v: V): v is V & $Typed<View> {
+  return isView(v) && validateView(v).success
 }

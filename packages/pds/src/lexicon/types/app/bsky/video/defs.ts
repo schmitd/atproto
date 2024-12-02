@@ -9,7 +9,7 @@ import { $Type, $Typed, is$typed, OmitKey } from '../../../../util'
 export const id = 'app.bsky.video.defs'
 
 export interface JobStatus {
-  $type?: 'app.bsky.video.defs#jobStatus'
+  $type?: $Type<'app.bsky.video.defs', 'jobStatus'>
   jobId: string
   did: string
   /** The state of the video processing job. All values not listed as a known value indicate that the job is in process. */
@@ -21,10 +21,18 @@ export interface JobStatus {
   message?: string
 }
 
-export function isJobStatus(v: unknown): v is $Typed<JobStatus> {
+export function isJobStatus<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.video.defs', 'jobStatus'> }>
+  : V & { $type: $Type<'app.bsky.video.defs', 'jobStatus'> } {
   return is$typed(v, id, 'jobStatus')
 }
 
 export function validateJobStatus(v: unknown) {
   return lexicons.validate(`${id}#jobStatus`, v) as ValidationResult<JobStatus>
+}
+
+export function isValidJobStatus<V>(v: V): v is V & $Typed<JobStatus> {
+  return isJobStatus(v) && validateJobStatus(v).success
 }

@@ -43,7 +43,7 @@ export function toKnownErr(e: any) {
 }
 
 export interface Notification {
-  $type?: 'app.bsky.notification.listNotifications#notification'
+  $type?: $Type<'app.bsky.notification.listNotifications', 'notification'>
   uri: string
   cid: string
   author: AppBskyActorDefs.ProfileView
@@ -64,7 +64,16 @@ export interface Notification {
   labels?: ComAtprotoLabelDefs.Label[]
 }
 
-export function isNotification(v: unknown): v is $Typed<Notification> {
+export function isNotification<V>(v: V): v is V extends { $type?: string }
+  ? Extract<
+      V,
+      {
+        $type: $Type<'app.bsky.notification.listNotifications', 'notification'>
+      }
+    >
+  : V & {
+      $type: $Type<'app.bsky.notification.listNotifications', 'notification'>
+    } {
   return is$typed(v, id, 'notification')
 }
 
@@ -73,4 +82,8 @@ export function validateNotification(v: unknown) {
     `${id}#notification`,
     v,
   ) as ValidationResult<Notification>
+}
+
+export function isValidNotification<V>(v: V): v is V & $Typed<Notification> {
+  return isNotification(v) && validateNotification(v).success
 }

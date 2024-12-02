@@ -18,7 +18,7 @@ export interface InputSchema {
     | $Typed<ComAtprotoAdminDefs.RepoRef>
     | $Typed<ComAtprotoRepoStrongRef.Main>
     | $Typed<ComAtprotoAdminDefs.RepoBlobRef>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   takedown?: ComAtprotoAdminDefs.StatusAttr
   deactivated?: ComAtprotoAdminDefs.StatusAttr
 }
@@ -28,7 +28,7 @@ export interface OutputSchema {
     | $Typed<ComAtprotoAdminDefs.RepoRef>
     | $Typed<ComAtprotoRepoStrongRef.Main>
     | $Typed<ComAtprotoAdminDefs.RepoBlobRef>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   takedown?: ComAtprotoAdminDefs.StatusAttr
 }
 

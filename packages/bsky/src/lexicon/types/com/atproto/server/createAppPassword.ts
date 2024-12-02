@@ -51,14 +51,21 @@ export type Handler<HA extends HandlerAuth = never> = (
 ) => Promise<HandlerOutput> | HandlerOutput
 
 export interface AppPassword {
-  $type?: 'com.atproto.server.createAppPassword#appPassword'
+  $type?: $Type<'com.atproto.server.createAppPassword', 'appPassword'>
   name: string
   password: string
   createdAt: string
   privileged?: boolean
 }
 
-export function isAppPassword(v: unknown): v is $Typed<AppPassword> {
+export function isAppPassword<V>(v: V): v is V extends { $type?: string }
+  ? Extract<
+      V,
+      { $type: $Type<'com.atproto.server.createAppPassword', 'appPassword'> }
+    >
+  : V & {
+      $type: $Type<'com.atproto.server.createAppPassword', 'appPassword'>
+    } {
   return is$typed(v, id, 'appPassword')
 }
 
@@ -67,4 +74,8 @@ export function validateAppPassword(v: unknown) {
     `${id}#appPassword`,
     v,
   ) as ValidationResult<AppPassword>
+}
+
+export function isValidAppPassword<V>(v: V): v is V & $Typed<AppPassword> {
+  return isAppPassword(v) && validateAppPassword(v).success
 }

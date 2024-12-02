@@ -22,7 +22,7 @@ export interface InputSchema {
   subject:
     | $Typed<ComAtprotoAdminDefs.RepoRef>
     | $Typed<ComAtprotoRepoStrongRef.Main>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
 }
 
 export interface OutputSchema {
@@ -32,7 +32,7 @@ export interface OutputSchema {
   subject:
     | $Typed<ComAtprotoAdminDefs.RepoRef>
     | $Typed<ComAtprotoRepoStrongRef.Main>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   reportedBy: string
   createdAt: string
 }

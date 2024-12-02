@@ -13,7 +13,7 @@ import * as AppBskyFeedDefs from '../feed/defs'
 export const id = 'app.bsky.graph.defs'
 
 export interface ListViewBasic {
-  $type?: 'app.bsky.graph.defs#listViewBasic'
+  $type?: $Type<'app.bsky.graph.defs', 'listViewBasic'>
   uri: string
   cid: string
   name: string
@@ -25,7 +25,11 @@ export interface ListViewBasic {
   indexedAt?: string
 }
 
-export function isListViewBasic(v: unknown): v is $Typed<ListViewBasic> {
+export function isListViewBasic<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'listViewBasic'> }>
+  : V & { $type: $Type<'app.bsky.graph.defs', 'listViewBasic'> } {
   return is$typed(v, id, 'listViewBasic')
 }
 
@@ -36,8 +40,12 @@ export function validateListViewBasic(v: unknown) {
   ) as ValidationResult<ListViewBasic>
 }
 
+export function isValidListViewBasic<V>(v: V): v is V & $Typed<ListViewBasic> {
+  return isListViewBasic(v) && validateListViewBasic(v).success
+}
+
 export interface ListView {
-  $type?: 'app.bsky.graph.defs#listView'
+  $type?: $Type<'app.bsky.graph.defs', 'listView'>
   uri: string
   cid: string
   creator: AppBskyActorDefs.ProfileView
@@ -52,7 +60,11 @@ export interface ListView {
   indexedAt: string
 }
 
-export function isListView(v: unknown): v is $Typed<ListView> {
+export function isListView<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'listView'> }>
+  : V & { $type: $Type<'app.bsky.graph.defs', 'listView'> } {
   return is$typed(v, id, 'listView')
 }
 
@@ -60,13 +72,21 @@ export function validateListView(v: unknown) {
   return lexicons.validate(`${id}#listView`, v) as ValidationResult<ListView>
 }
 
+export function isValidListView<V>(v: V): v is V & $Typed<ListView> {
+  return isListView(v) && validateListView(v).success
+}
+
 export interface ListItemView {
-  $type?: 'app.bsky.graph.defs#listItemView'
+  $type?: $Type<'app.bsky.graph.defs', 'listItemView'>
   uri: string
   subject: AppBskyActorDefs.ProfileView
 }
 
-export function isListItemView(v: unknown): v is $Typed<ListItemView> {
+export function isListItemView<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'listItemView'> }>
+  : V & { $type: $Type<'app.bsky.graph.defs', 'listItemView'> } {
   return is$typed(v, id, 'listItemView')
 }
 
@@ -77,8 +97,12 @@ export function validateListItemView(v: unknown) {
   ) as ValidationResult<ListItemView>
 }
 
+export function isValidListItemView<V>(v: V): v is V & $Typed<ListItemView> {
+  return isListItemView(v) && validateListItemView(v).success
+}
+
 export interface StarterPackView {
-  $type?: 'app.bsky.graph.defs#starterPackView'
+  $type?: $Type<'app.bsky.graph.defs', 'starterPackView'>
   uri: string
   cid: string
   record: { [_ in string]: unknown }
@@ -92,7 +116,11 @@ export interface StarterPackView {
   indexedAt: string
 }
 
-export function isStarterPackView(v: unknown): v is $Typed<StarterPackView> {
+export function isStarterPackView<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'starterPackView'> }>
+  : V & { $type: $Type<'app.bsky.graph.defs', 'starterPackView'> } {
   return is$typed(v, id, 'starterPackView')
 }
 
@@ -103,8 +131,14 @@ export function validateStarterPackView(v: unknown) {
   ) as ValidationResult<StarterPackView>
 }
 
+export function isValidStarterPackView<V>(
+  v: V,
+): v is V & $Typed<StarterPackView> {
+  return isStarterPackView(v) && validateStarterPackView(v).success
+}
+
 export interface StarterPackViewBasic {
-  $type?: 'app.bsky.graph.defs#starterPackViewBasic'
+  $type?: $Type<'app.bsky.graph.defs', 'starterPackViewBasic'>
   uri: string
   cid: string
   record: { [_ in string]: unknown }
@@ -116,9 +150,11 @@ export interface StarterPackViewBasic {
   indexedAt: string
 }
 
-export function isStarterPackViewBasic(
-  v: unknown,
-): v is $Typed<StarterPackViewBasic> {
+export function isStarterPackViewBasic<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'starterPackViewBasic'> }>
+  : V & { $type: $Type<'app.bsky.graph.defs', 'starterPackViewBasic'> } {
   return is$typed(v, id, 'starterPackViewBasic')
 }
 
@@ -127,6 +163,12 @@ export function validateStarterPackViewBasic(v: unknown) {
     `${id}#starterPackViewBasic`,
     v,
   ) as ValidationResult<StarterPackViewBasic>
+}
+
+export function isValidStarterPackViewBasic<V>(
+  v: V,
+): v is V & $Typed<StarterPackViewBasic> {
+  return isStarterPackViewBasic(v) && validateStarterPackViewBasic(v).success
 }
 
 export type ListPurpose =
@@ -143,12 +185,16 @@ export const CURATELIST = `${id}#curatelist`
 export const REFERENCELIST = `${id}#referencelist`
 
 export interface ListViewerState {
-  $type?: 'app.bsky.graph.defs#listViewerState'
+  $type?: $Type<'app.bsky.graph.defs', 'listViewerState'>
   muted?: boolean
   blocked?: string
 }
 
-export function isListViewerState(v: unknown): v is $Typed<ListViewerState> {
+export function isListViewerState<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'listViewerState'> }>
+  : V & { $type: $Type<'app.bsky.graph.defs', 'listViewerState'> } {
   return is$typed(v, id, 'listViewerState')
 }
 
@@ -159,14 +205,24 @@ export function validateListViewerState(v: unknown) {
   ) as ValidationResult<ListViewerState>
 }
 
+export function isValidListViewerState<V>(
+  v: V,
+): v is V & $Typed<ListViewerState> {
+  return isListViewerState(v) && validateListViewerState(v).success
+}
+
 /** indicates that a handle or DID could not be resolved */
 export interface NotFoundActor {
-  $type?: 'app.bsky.graph.defs#notFoundActor'
+  $type?: $Type<'app.bsky.graph.defs', 'notFoundActor'>
   actor: string
   notFound: true
 }
 
-export function isNotFoundActor(v: unknown): v is $Typed<NotFoundActor> {
+export function isNotFoundActor<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'notFoundActor'> }>
+  : V & { $type: $Type<'app.bsky.graph.defs', 'notFoundActor'> } {
   return is$typed(v, id, 'notFoundActor')
 }
 
@@ -177,9 +233,13 @@ export function validateNotFoundActor(v: unknown) {
   ) as ValidationResult<NotFoundActor>
 }
 
+export function isValidNotFoundActor<V>(v: V): v is V & $Typed<NotFoundActor> {
+  return isNotFoundActor(v) && validateNotFoundActor(v).success
+}
+
 /** lists the bi-directional graph relationships between one actor (not indicated in the object), and the target actors (the DID included in the object) */
 export interface Relationship {
-  $type?: 'app.bsky.graph.defs#relationship'
+  $type?: $Type<'app.bsky.graph.defs', 'relationship'>
   did: string
   /** if the actor follows this DID, this is the AT-URI of the follow record */
   following?: string
@@ -187,7 +247,11 @@ export interface Relationship {
   followedBy?: string
 }
 
-export function isRelationship(v: unknown): v is $Typed<Relationship> {
+export function isRelationship<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.graph.defs', 'relationship'> }>
+  : V & { $type: $Type<'app.bsky.graph.defs', 'relationship'> } {
   return is$typed(v, id, 'relationship')
 }
 
@@ -196,4 +260,8 @@ export function validateRelationship(v: unknown) {
     `${id}#relationship`,
     v,
   ) as ValidationResult<Relationship>
+}
+
+export function isValidRelationship<V>(v: V): v is V & $Typed<Relationship> {
+  return isRelationship(v) && validateRelationship(v).success
 }

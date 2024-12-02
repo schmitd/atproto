@@ -9,17 +9,25 @@ import { lexicons } from '../../../../lexicons'
 export const id = 'app.bsky.graph.listblock'
 
 export interface Record {
-  $type?: 'app.bsky.graph.listblock' | 'app.bsky.graph.listblock#main'
+  $type?: $Type<'app.bsky.graph.listblock', 'main'>
   /** Reference (AT-URI) to the mod list record. */
   subject: string
   createdAt: string
   [k: string]: unknown
 }
 
-export function isRecord(v: unknown): v is $Typed<Record> {
+export function isRecord<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.graph.listblock', 'main'> }>
+  : V & { $type: $Type<'app.bsky.graph.listblock', 'main'> } {
   return is$typed(v, id, 'main')
 }
 
 export function validateRecord(v: unknown) {
   return lexicons.validate(`${id}#main`, v) as ValidationResult<Record>
+}
+
+export function isValidRecord<V>(v: V): v is V & $Typed<Record> {
+  return isRecord(v) && validateRecord(v).success
 }

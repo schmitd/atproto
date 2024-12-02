@@ -10,12 +10,16 @@ import * as ComAtprotoServerDefs from '../server/defs'
 export const id = 'com.atproto.admin.defs'
 
 export interface StatusAttr {
-  $type?: 'com.atproto.admin.defs#statusAttr'
+  $type?: $Type<'com.atproto.admin.defs', 'statusAttr'>
   applied: boolean
   ref?: string
 }
 
-export function isStatusAttr(v: unknown): v is $Typed<StatusAttr> {
+export function isStatusAttr<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.admin.defs', 'statusAttr'> }>
+  : V & { $type: $Type<'com.atproto.admin.defs', 'statusAttr'> } {
   return is$typed(v, id, 'statusAttr')
 }
 
@@ -26,8 +30,12 @@ export function validateStatusAttr(v: unknown) {
   ) as ValidationResult<StatusAttr>
 }
 
+export function isValidStatusAttr<V>(v: V): v is V & $Typed<StatusAttr> {
+  return isStatusAttr(v) && validateStatusAttr(v).success
+}
+
 export interface AccountView {
-  $type?: 'com.atproto.admin.defs#accountView'
+  $type?: $Type<'com.atproto.admin.defs', 'accountView'>
   did: string
   handle: string
   email?: string
@@ -42,7 +50,11 @@ export interface AccountView {
   threatSignatures?: ThreatSignature[]
 }
 
-export function isAccountView(v: unknown): v is $Typed<AccountView> {
+export function isAccountView<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.admin.defs', 'accountView'> }>
+  : V & { $type: $Type<'com.atproto.admin.defs', 'accountView'> } {
   return is$typed(v, id, 'accountView')
 }
 
@@ -53,12 +65,20 @@ export function validateAccountView(v: unknown) {
   ) as ValidationResult<AccountView>
 }
 
+export function isValidAccountView<V>(v: V): v is V & $Typed<AccountView> {
+  return isAccountView(v) && validateAccountView(v).success
+}
+
 export interface RepoRef {
-  $type?: 'com.atproto.admin.defs#repoRef'
+  $type?: $Type<'com.atproto.admin.defs', 'repoRef'>
   did: string
 }
 
-export function isRepoRef(v: unknown): v is $Typed<RepoRef> {
+export function isRepoRef<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.admin.defs', 'repoRef'> }>
+  : V & { $type: $Type<'com.atproto.admin.defs', 'repoRef'> } {
   return is$typed(v, id, 'repoRef')
 }
 
@@ -66,14 +86,22 @@ export function validateRepoRef(v: unknown) {
   return lexicons.validate(`${id}#repoRef`, v) as ValidationResult<RepoRef>
 }
 
+export function isValidRepoRef<V>(v: V): v is V & $Typed<RepoRef> {
+  return isRepoRef(v) && validateRepoRef(v).success
+}
+
 export interface RepoBlobRef {
-  $type?: 'com.atproto.admin.defs#repoBlobRef'
+  $type?: $Type<'com.atproto.admin.defs', 'repoBlobRef'>
   did: string
   cid: string
   recordUri?: string
 }
 
-export function isRepoBlobRef(v: unknown): v is $Typed<RepoBlobRef> {
+export function isRepoBlobRef<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.admin.defs', 'repoBlobRef'> }>
+  : V & { $type: $Type<'com.atproto.admin.defs', 'repoBlobRef'> } {
   return is$typed(v, id, 'repoBlobRef')
 }
 
@@ -84,13 +112,21 @@ export function validateRepoBlobRef(v: unknown) {
   ) as ValidationResult<RepoBlobRef>
 }
 
+export function isValidRepoBlobRef<V>(v: V): v is V & $Typed<RepoBlobRef> {
+  return isRepoBlobRef(v) && validateRepoBlobRef(v).success
+}
+
 export interface ThreatSignature {
-  $type?: 'com.atproto.admin.defs#threatSignature'
+  $type?: $Type<'com.atproto.admin.defs', 'threatSignature'>
   property: string
   value: string
 }
 
-export function isThreatSignature(v: unknown): v is $Typed<ThreatSignature> {
+export function isThreatSignature<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.admin.defs', 'threatSignature'> }>
+  : V & { $type: $Type<'com.atproto.admin.defs', 'threatSignature'> } {
   return is$typed(v, id, 'threatSignature')
 }
 
@@ -99,4 +135,10 @@ export function validateThreatSignature(v: unknown) {
     `${id}#threatSignature`,
     v,
   ) as ValidationResult<ThreatSignature>
+}
+
+export function isValidThreatSignature<V>(
+  v: V,
+): v is V & $Typed<ThreatSignature> {
+  return isThreatSignature(v) && validateThreatSignature(v).success
 }

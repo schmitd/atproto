@@ -12,13 +12,17 @@ import * as ChatBskyActorDefs from '../actor/defs'
 export const id = 'chat.bsky.convo.defs'
 
 export interface MessageRef {
-  $type?: 'chat.bsky.convo.defs#messageRef'
+  $type?: $Type<'chat.bsky.convo.defs', 'messageRef'>
   did: string
   convoId: string
   messageId: string
 }
 
-export function isMessageRef(v: unknown): v is $Typed<MessageRef> {
+export function isMessageRef<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'messageRef'> }>
+  : V & { $type: $Type<'chat.bsky.convo.defs', 'messageRef'> } {
   return is$typed(v, id, 'messageRef')
 }
 
@@ -29,15 +33,23 @@ export function validateMessageRef(v: unknown) {
   ) as ValidationResult<MessageRef>
 }
 
+export function isValidMessageRef<V>(v: V): v is V & $Typed<MessageRef> {
+  return isMessageRef(v) && validateMessageRef(v).success
+}
+
 export interface MessageInput {
-  $type?: 'chat.bsky.convo.defs#messageInput'
+  $type?: $Type<'chat.bsky.convo.defs', 'messageInput'>
   text: string
   /** Annotations of text (mentions, URLs, hashtags, etc) */
   facets?: AppBskyRichtextFacet.Main[]
-  embed?: $Typed<AppBskyEmbedRecord.Main> | $Typed<{ [k: string]: unknown }>
+  embed?: $Typed<AppBskyEmbedRecord.Main> | { $type: string }
 }
 
-export function isMessageInput(v: unknown): v is $Typed<MessageInput> {
+export function isMessageInput<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'messageInput'> }>
+  : V & { $type: $Type<'chat.bsky.convo.defs', 'messageInput'> } {
   return is$typed(v, id, 'messageInput')
 }
 
@@ -48,19 +60,27 @@ export function validateMessageInput(v: unknown) {
   ) as ValidationResult<MessageInput>
 }
 
+export function isValidMessageInput<V>(v: V): v is V & $Typed<MessageInput> {
+  return isMessageInput(v) && validateMessageInput(v).success
+}
+
 export interface MessageView {
-  $type?: 'chat.bsky.convo.defs#messageView'
+  $type?: $Type<'chat.bsky.convo.defs', 'messageView'>
   id: string
   rev: string
   text: string
   /** Annotations of text (mentions, URLs, hashtags, etc) */
   facets?: AppBskyRichtextFacet.Main[]
-  embed?: $Typed<AppBskyEmbedRecord.View> | $Typed<{ [k: string]: unknown }>
+  embed?: $Typed<AppBskyEmbedRecord.View> | { $type: string }
   sender: MessageViewSender
   sentAt: string
 }
 
-export function isMessageView(v: unknown): v is $Typed<MessageView> {
+export function isMessageView<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'messageView'> }>
+  : V & { $type: $Type<'chat.bsky.convo.defs', 'messageView'> } {
   return is$typed(v, id, 'messageView')
 }
 
@@ -71,17 +91,23 @@ export function validateMessageView(v: unknown) {
   ) as ValidationResult<MessageView>
 }
 
+export function isValidMessageView<V>(v: V): v is V & $Typed<MessageView> {
+  return isMessageView(v) && validateMessageView(v).success
+}
+
 export interface DeletedMessageView {
-  $type?: 'chat.bsky.convo.defs#deletedMessageView'
+  $type?: $Type<'chat.bsky.convo.defs', 'deletedMessageView'>
   id: string
   rev: string
   sender: MessageViewSender
   sentAt: string
 }
 
-export function isDeletedMessageView(
-  v: unknown,
-): v is $Typed<DeletedMessageView> {
+export function isDeletedMessageView<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'deletedMessageView'> }>
+  : V & { $type: $Type<'chat.bsky.convo.defs', 'deletedMessageView'> } {
   return is$typed(v, id, 'deletedMessageView')
 }
 
@@ -92,14 +118,22 @@ export function validateDeletedMessageView(v: unknown) {
   ) as ValidationResult<DeletedMessageView>
 }
 
+export function isValidDeletedMessageView<V>(
+  v: V,
+): v is V & $Typed<DeletedMessageView> {
+  return isDeletedMessageView(v) && validateDeletedMessageView(v).success
+}
+
 export interface MessageViewSender {
-  $type?: 'chat.bsky.convo.defs#messageViewSender'
+  $type?: $Type<'chat.bsky.convo.defs', 'messageViewSender'>
   did: string
 }
 
-export function isMessageViewSender(
-  v: unknown,
-): v is $Typed<MessageViewSender> {
+export function isMessageViewSender<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'messageViewSender'> }>
+  : V & { $type: $Type<'chat.bsky.convo.defs', 'messageViewSender'> } {
   return is$typed(v, id, 'messageViewSender')
 }
 
@@ -110,21 +144,31 @@ export function validateMessageViewSender(v: unknown) {
   ) as ValidationResult<MessageViewSender>
 }
 
+export function isValidMessageViewSender<V>(
+  v: V,
+): v is V & $Typed<MessageViewSender> {
+  return isMessageViewSender(v) && validateMessageViewSender(v).success
+}
+
 export interface ConvoView {
-  $type?: 'chat.bsky.convo.defs#convoView'
+  $type?: $Type<'chat.bsky.convo.defs', 'convoView'>
   id: string
   rev: string
   members: ChatBskyActorDefs.ProfileViewBasic[]
   lastMessage?:
     | $Typed<MessageView>
     | $Typed<DeletedMessageView>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   muted: boolean
   opened?: boolean
   unreadCount: number
 }
 
-export function isConvoView(v: unknown): v is $Typed<ConvoView> {
+export function isConvoView<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'convoView'> }>
+  : V & { $type: $Type<'chat.bsky.convo.defs', 'convoView'> } {
   return is$typed(v, id, 'convoView')
 }
 
@@ -132,13 +176,21 @@ export function validateConvoView(v: unknown) {
   return lexicons.validate(`${id}#convoView`, v) as ValidationResult<ConvoView>
 }
 
+export function isValidConvoView<V>(v: V): v is V & $Typed<ConvoView> {
+  return isConvoView(v) && validateConvoView(v).success
+}
+
 export interface LogBeginConvo {
-  $type?: 'chat.bsky.convo.defs#logBeginConvo'
+  $type?: $Type<'chat.bsky.convo.defs', 'logBeginConvo'>
   rev: string
   convoId: string
 }
 
-export function isLogBeginConvo(v: unknown): v is $Typed<LogBeginConvo> {
+export function isLogBeginConvo<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'logBeginConvo'> }>
+  : V & { $type: $Type<'chat.bsky.convo.defs', 'logBeginConvo'> } {
   return is$typed(v, id, 'logBeginConvo')
 }
 
@@ -149,13 +201,21 @@ export function validateLogBeginConvo(v: unknown) {
   ) as ValidationResult<LogBeginConvo>
 }
 
+export function isValidLogBeginConvo<V>(v: V): v is V & $Typed<LogBeginConvo> {
+  return isLogBeginConvo(v) && validateLogBeginConvo(v).success
+}
+
 export interface LogLeaveConvo {
-  $type?: 'chat.bsky.convo.defs#logLeaveConvo'
+  $type?: $Type<'chat.bsky.convo.defs', 'logLeaveConvo'>
   rev: string
   convoId: string
 }
 
-export function isLogLeaveConvo(v: unknown): v is $Typed<LogLeaveConvo> {
+export function isLogLeaveConvo<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'logLeaveConvo'> }>
+  : V & { $type: $Type<'chat.bsky.convo.defs', 'logLeaveConvo'> } {
   return is$typed(v, id, 'logLeaveConvo')
 }
 
@@ -166,17 +226,22 @@ export function validateLogLeaveConvo(v: unknown) {
   ) as ValidationResult<LogLeaveConvo>
 }
 
-export interface LogCreateMessage {
-  $type?: 'chat.bsky.convo.defs#logCreateMessage'
-  rev: string
-  convoId: string
-  message:
-    | $Typed<MessageView>
-    | $Typed<DeletedMessageView>
-    | $Typed<{ [k: string]: unknown }>
+export function isValidLogLeaveConvo<V>(v: V): v is V & $Typed<LogLeaveConvo> {
+  return isLogLeaveConvo(v) && validateLogLeaveConvo(v).success
 }
 
-export function isLogCreateMessage(v: unknown): v is $Typed<LogCreateMessage> {
+export interface LogCreateMessage {
+  $type?: $Type<'chat.bsky.convo.defs', 'logCreateMessage'>
+  rev: string
+  convoId: string
+  message: $Typed<MessageView> | $Typed<DeletedMessageView> | { $type: string }
+}
+
+export function isLogCreateMessage<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'logCreateMessage'> }>
+  : V & { $type: $Type<'chat.bsky.convo.defs', 'logCreateMessage'> } {
   return is$typed(v, id, 'logCreateMessage')
 }
 
@@ -187,17 +252,24 @@ export function validateLogCreateMessage(v: unknown) {
   ) as ValidationResult<LogCreateMessage>
 }
 
-export interface LogDeleteMessage {
-  $type?: 'chat.bsky.convo.defs#logDeleteMessage'
-  rev: string
-  convoId: string
-  message:
-    | $Typed<MessageView>
-    | $Typed<DeletedMessageView>
-    | $Typed<{ [k: string]: unknown }>
+export function isValidLogCreateMessage<V>(
+  v: V,
+): v is V & $Typed<LogCreateMessage> {
+  return isLogCreateMessage(v) && validateLogCreateMessage(v).success
 }
 
-export function isLogDeleteMessage(v: unknown): v is $Typed<LogDeleteMessage> {
+export interface LogDeleteMessage {
+  $type?: $Type<'chat.bsky.convo.defs', 'logDeleteMessage'>
+  rev: string
+  convoId: string
+  message: $Typed<MessageView> | $Typed<DeletedMessageView> | { $type: string }
+}
+
+export function isLogDeleteMessage<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'chat.bsky.convo.defs', 'logDeleteMessage'> }>
+  : V & { $type: $Type<'chat.bsky.convo.defs', 'logDeleteMessage'> } {
   return is$typed(v, id, 'logDeleteMessage')
 }
 
@@ -206,4 +278,10 @@ export function validateLogDeleteMessage(v: unknown) {
     `${id}#logDeleteMessage`,
     v,
   ) as ValidationResult<LogDeleteMessage>
+}
+
+export function isValidLogDeleteMessage<V>(
+  v: V,
+): v is V & $Typed<LogDeleteMessage> {
+  return isLogDeleteMessage(v) && validateLogDeleteMessage(v).success
 }

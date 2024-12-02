@@ -9,7 +9,7 @@ import { $Type, $Typed, is$typed, OmitKey } from '../../../../util'
 export const id = 'tools.ozone.setting.defs'
 
 export interface Option {
-  $type?: 'tools.ozone.setting.defs#option'
+  $type?: $Type<'tools.ozone.setting.defs', 'option'>
   key: string
   did: string
   value: { [_ in string]: unknown }
@@ -26,10 +26,18 @@ export interface Option {
   lastUpdatedBy: string
 }
 
-export function isOption(v: unknown): v is $Typed<Option> {
+export function isOption<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'tools.ozone.setting.defs', 'option'> }>
+  : V & { $type: $Type<'tools.ozone.setting.defs', 'option'> } {
   return is$typed(v, id, 'option')
 }
 
 export function validateOption(v: unknown) {
   return lexicons.validate(`${id}#option`, v) as ValidationResult<Option>
+}
+
+export function isValidOption<V>(v: V): v is V & $Typed<Option> {
+  return isOption(v) && validateOption(v).success
 }

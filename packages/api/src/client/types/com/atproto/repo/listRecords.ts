@@ -48,16 +48,24 @@ export function toKnownErr(e: any) {
 }
 
 export interface Record {
-  $type?: 'com.atproto.repo.listRecords#record'
+  $type?: $Type<'com.atproto.repo.listRecords', 'record'>
   uri: string
   cid: string
   value: { [_ in string]: unknown }
 }
 
-export function isRecord(v: unknown): v is $Typed<Record> {
+export function isRecord<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.repo.listRecords', 'record'> }>
+  : V & { $type: $Type<'com.atproto.repo.listRecords', 'record'> } {
   return is$typed(v, id, 'record')
 }
 
 export function validateRecord(v: unknown) {
   return lexicons.validate(`${id}#record`, v) as ValidationResult<Record>
+}
+
+export function isValidRecord<V>(v: V): v is V & $Typed<Record> {
+  return isRecord(v) && validateRecord(v).success
 }

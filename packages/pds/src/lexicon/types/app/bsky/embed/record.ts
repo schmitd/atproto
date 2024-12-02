@@ -19,11 +19,15 @@ import * as AppBskyEmbedRecordWithMedia from './recordWithMedia'
 export const id = 'app.bsky.embed.record'
 
 export interface Main {
-  $type?: 'app.bsky.embed.record' | 'app.bsky.embed.record#main'
+  $type?: $Type<'app.bsky.embed.record', 'main'>
   record: ComAtprotoRepoStrongRef.Main
 }
 
-export function isMain(v: unknown): v is $Typed<Main> {
+export function isMain<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.embed.record', 'main'> }>
+  : V & { $type: $Type<'app.bsky.embed.record', 'main'> } {
   return is$typed(v, id, 'main')
 }
 
@@ -31,8 +35,12 @@ export function validateMain(v: unknown) {
   return lexicons.validate(`${id}#main`, v) as ValidationResult<Main>
 }
 
+export function isValidMain<V>(v: V): v is V & $Typed<Main> {
+  return isMain(v) && validateMain(v).success
+}
+
 export interface View {
-  $type?: 'app.bsky.embed.record#view'
+  $type?: $Type<'app.bsky.embed.record', 'view'>
   record:
     | $Typed<ViewRecord>
     | $Typed<ViewNotFound>
@@ -42,10 +50,14 @@ export interface View {
     | $Typed<AppBskyGraphDefs.ListView>
     | $Typed<AppBskyLabelerDefs.LabelerView>
     | $Typed<AppBskyGraphDefs.StarterPackViewBasic>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
 }
 
-export function isView(v: unknown): v is $Typed<View> {
+export function isView<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.embed.record', 'view'> }>
+  : V & { $type: $Type<'app.bsky.embed.record', 'view'> } {
   return is$typed(v, id, 'view')
 }
 
@@ -53,8 +65,12 @@ export function validateView(v: unknown) {
   return lexicons.validate(`${id}#view`, v) as ValidationResult<View>
 }
 
+export function isValidView<V>(v: V): v is V & $Typed<View> {
+  return isView(v) && validateView(v).success
+}
+
 export interface ViewRecord {
-  $type?: 'app.bsky.embed.record#viewRecord'
+  $type?: $Type<'app.bsky.embed.record', 'viewRecord'>
   uri: string
   cid: string
   author: AppBskyActorDefs.ProfileViewBasic
@@ -71,12 +87,16 @@ export interface ViewRecord {
     | $Typed<AppBskyEmbedExternal.View>
     | $Typed<View>
     | $Typed<AppBskyEmbedRecordWithMedia.View>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   )[]
   indexedAt: string
 }
 
-export function isViewRecord(v: unknown): v is $Typed<ViewRecord> {
+export function isViewRecord<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.embed.record', 'viewRecord'> }>
+  : V & { $type: $Type<'app.bsky.embed.record', 'viewRecord'> } {
   return is$typed(v, id, 'viewRecord')
 }
 
@@ -87,13 +107,21 @@ export function validateViewRecord(v: unknown) {
   ) as ValidationResult<ViewRecord>
 }
 
+export function isValidViewRecord<V>(v: V): v is V & $Typed<ViewRecord> {
+  return isViewRecord(v) && validateViewRecord(v).success
+}
+
 export interface ViewNotFound {
-  $type?: 'app.bsky.embed.record#viewNotFound'
+  $type?: $Type<'app.bsky.embed.record', 'viewNotFound'>
   uri: string
   notFound: true
 }
 
-export function isViewNotFound(v: unknown): v is $Typed<ViewNotFound> {
+export function isViewNotFound<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.embed.record', 'viewNotFound'> }>
+  : V & { $type: $Type<'app.bsky.embed.record', 'viewNotFound'> } {
   return is$typed(v, id, 'viewNotFound')
 }
 
@@ -104,14 +132,22 @@ export function validateViewNotFound(v: unknown) {
   ) as ValidationResult<ViewNotFound>
 }
 
+export function isValidViewNotFound<V>(v: V): v is V & $Typed<ViewNotFound> {
+  return isViewNotFound(v) && validateViewNotFound(v).success
+}
+
 export interface ViewBlocked {
-  $type?: 'app.bsky.embed.record#viewBlocked'
+  $type?: $Type<'app.bsky.embed.record', 'viewBlocked'>
   uri: string
   blocked: true
   author: AppBskyFeedDefs.BlockedAuthor
 }
 
-export function isViewBlocked(v: unknown): v is $Typed<ViewBlocked> {
+export function isViewBlocked<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.embed.record', 'viewBlocked'> }>
+  : V & { $type: $Type<'app.bsky.embed.record', 'viewBlocked'> } {
   return is$typed(v, id, 'viewBlocked')
 }
 
@@ -122,13 +158,21 @@ export function validateViewBlocked(v: unknown) {
   ) as ValidationResult<ViewBlocked>
 }
 
+export function isValidViewBlocked<V>(v: V): v is V & $Typed<ViewBlocked> {
+  return isViewBlocked(v) && validateViewBlocked(v).success
+}
+
 export interface ViewDetached {
-  $type?: 'app.bsky.embed.record#viewDetached'
+  $type?: $Type<'app.bsky.embed.record', 'viewDetached'>
   uri: string
   detached: true
 }
 
-export function isViewDetached(v: unknown): v is $Typed<ViewDetached> {
+export function isViewDetached<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.embed.record', 'viewDetached'> }>
+  : V & { $type: $Type<'app.bsky.embed.record', 'viewDetached'> } {
   return is$typed(v, id, 'viewDetached')
 }
 
@@ -137,4 +181,8 @@ export function validateViewDetached(v: unknown) {
     `${id}#viewDetached`,
     v,
   ) as ValidationResult<ViewDetached>
+}
+
+export function isValidViewDetached<V>(v: V): v is V & $Typed<ViewDetached> {
+  return isViewDetached(v) && validateViewDetached(v).success
 }

@@ -63,13 +63,17 @@ export type Handler<HA extends HandlerAuth = never> = (
 
 /** Operation which creates a new record. */
 export interface Create {
-  $type?: 'com.atproto.repo.applyWrites#create'
+  $type?: $Type<'com.atproto.repo.applyWrites', 'create'>
   collection: string
   rkey?: string
   value: { [_ in string]: unknown }
 }
 
-export function isCreate(v: unknown): v is $Typed<Create> {
+export function isCreate<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.repo.applyWrites', 'create'> }>
+  : V & { $type: $Type<'com.atproto.repo.applyWrites', 'create'> } {
   return is$typed(v, id, 'create')
 }
 
@@ -77,15 +81,23 @@ export function validateCreate(v: unknown) {
   return lexicons.validate(`${id}#create`, v) as ValidationResult<Create>
 }
 
+export function isValidCreate<V>(v: V): v is V & $Typed<Create> {
+  return isCreate(v) && validateCreate(v).success
+}
+
 /** Operation which updates an existing record. */
 export interface Update {
-  $type?: 'com.atproto.repo.applyWrites#update'
+  $type?: $Type<'com.atproto.repo.applyWrites', 'update'>
   collection: string
   rkey: string
   value: { [_ in string]: unknown }
 }
 
-export function isUpdate(v: unknown): v is $Typed<Update> {
+export function isUpdate<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.repo.applyWrites', 'update'> }>
+  : V & { $type: $Type<'com.atproto.repo.applyWrites', 'update'> } {
   return is$typed(v, id, 'update')
 }
 
@@ -93,14 +105,22 @@ export function validateUpdate(v: unknown) {
   return lexicons.validate(`${id}#update`, v) as ValidationResult<Update>
 }
 
+export function isValidUpdate<V>(v: V): v is V & $Typed<Update> {
+  return isUpdate(v) && validateUpdate(v).success
+}
+
 /** Operation which deletes an existing record. */
 export interface Delete {
-  $type?: 'com.atproto.repo.applyWrites#delete'
+  $type?: $Type<'com.atproto.repo.applyWrites', 'delete'>
   collection: string
   rkey: string
 }
 
-export function isDelete(v: unknown): v is $Typed<Delete> {
+export function isDelete<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.repo.applyWrites', 'delete'> }>
+  : V & { $type: $Type<'com.atproto.repo.applyWrites', 'delete'> } {
   return is$typed(v, id, 'delete')
 }
 
@@ -108,14 +128,22 @@ export function validateDelete(v: unknown) {
   return lexicons.validate(`${id}#delete`, v) as ValidationResult<Delete>
 }
 
+export function isValidDelete<V>(v: V): v is V & $Typed<Delete> {
+  return isDelete(v) && validateDelete(v).success
+}
+
 export interface CreateResult {
-  $type?: 'com.atproto.repo.applyWrites#createResult'
+  $type?: $Type<'com.atproto.repo.applyWrites', 'createResult'>
   uri: string
   cid: string
   validationStatus?: 'valid' | 'unknown' | (string & {})
 }
 
-export function isCreateResult(v: unknown): v is $Typed<CreateResult> {
+export function isCreateResult<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.repo.applyWrites', 'createResult'> }>
+  : V & { $type: $Type<'com.atproto.repo.applyWrites', 'createResult'> } {
   return is$typed(v, id, 'createResult')
 }
 
@@ -126,14 +154,22 @@ export function validateCreateResult(v: unknown) {
   ) as ValidationResult<CreateResult>
 }
 
+export function isValidCreateResult<V>(v: V): v is V & $Typed<CreateResult> {
+  return isCreateResult(v) && validateCreateResult(v).success
+}
+
 export interface UpdateResult {
-  $type?: 'com.atproto.repo.applyWrites#updateResult'
+  $type?: $Type<'com.atproto.repo.applyWrites', 'updateResult'>
   uri: string
   cid: string
   validationStatus?: 'valid' | 'unknown' | (string & {})
 }
 
-export function isUpdateResult(v: unknown): v is $Typed<UpdateResult> {
+export function isUpdateResult<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.repo.applyWrites', 'updateResult'> }>
+  : V & { $type: $Type<'com.atproto.repo.applyWrites', 'updateResult'> } {
   return is$typed(v, id, 'updateResult')
 }
 
@@ -144,11 +180,19 @@ export function validateUpdateResult(v: unknown) {
   ) as ValidationResult<UpdateResult>
 }
 
-export interface DeleteResult {
-  $type?: 'com.atproto.repo.applyWrites#deleteResult'
+export function isValidUpdateResult<V>(v: V): v is V & $Typed<UpdateResult> {
+  return isUpdateResult(v) && validateUpdateResult(v).success
 }
 
-export function isDeleteResult(v: unknown): v is $Typed<DeleteResult> {
+export interface DeleteResult {
+  $type?: $Type<'com.atproto.repo.applyWrites', 'deleteResult'>
+}
+
+export function isDeleteResult<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.repo.applyWrites', 'deleteResult'> }>
+  : V & { $type: $Type<'com.atproto.repo.applyWrites', 'deleteResult'> } {
   return is$typed(v, id, 'deleteResult')
 }
 
@@ -157,4 +201,8 @@ export function validateDeleteResult(v: unknown) {
     `${id}#deleteResult`,
     v,
   ) as ValidationResult<DeleteResult>
+}
+
+export function isValidDeleteResult<V>(v: V): v is V & $Typed<DeleteResult> {
+  return isDeleteResult(v) && validateDeleteResult(v).success
 }

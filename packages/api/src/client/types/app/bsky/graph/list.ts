@@ -12,24 +12,30 @@ import * as ComAtprotoLabelDefs from '../../../com/atproto/label/defs'
 export const id = 'app.bsky.graph.list'
 
 export interface Record {
-  $type?: 'app.bsky.graph.list' | 'app.bsky.graph.list#main'
+  $type?: $Type<'app.bsky.graph.list', 'main'>
   purpose: AppBskyGraphDefs.ListPurpose
   /** Display name for list; can not be empty. */
   name: string
   description?: string
   descriptionFacets?: AppBskyRichtextFacet.Main[]
   avatar?: BlobRef
-  labels?:
-    | $Typed<ComAtprotoLabelDefs.SelfLabels>
-    | $Typed<{ [k: string]: unknown }>
+  labels?: $Typed<ComAtprotoLabelDefs.SelfLabels> | { $type: string }
   createdAt: string
   [k: string]: unknown
 }
 
-export function isRecord(v: unknown): v is $Typed<Record> {
+export function isRecord<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.graph.list', 'main'> }>
+  : V & { $type: $Type<'app.bsky.graph.list', 'main'> } {
   return is$typed(v, id, 'main')
 }
 
 export function validateRecord(v: unknown) {
   return lexicons.validate(`${id}#main`, v) as ValidationResult<Record>
+}
+
+export function isValidRecord<V>(v: V): v is V & $Typed<Record> {
+  return isRecord(v) && validateRecord(v).success
 }

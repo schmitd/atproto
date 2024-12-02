@@ -10,7 +10,7 @@ import * as AppBskyActorDefs from '../../../app/bsky/actor/defs'
 export const id = 'tools.ozone.team.defs'
 
 export interface Member {
-  $type?: 'tools.ozone.team.defs#member'
+  $type?: $Type<'tools.ozone.team.defs', 'member'>
   did: string
   disabled?: boolean
   profile?: AppBskyActorDefs.ProfileViewDetailed
@@ -24,12 +24,20 @@ export interface Member {
     | (string & {})
 }
 
-export function isMember(v: unknown): v is $Typed<Member> {
+export function isMember<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'tools.ozone.team.defs', 'member'> }>
+  : V & { $type: $Type<'tools.ozone.team.defs', 'member'> } {
   return is$typed(v, id, 'member')
 }
 
 export function validateMember(v: unknown) {
   return lexicons.validate(`${id}#member`, v) as ValidationResult<Member>
+}
+
+export function isValidMember<V>(v: V): v is V & $Typed<Member> {
+  return isMember(v) && validateMember(v).success
 }
 
 /** Admin role. Highest level of access, can perform all actions. */

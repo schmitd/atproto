@@ -9,14 +9,14 @@ import { lexicons } from '../../../../lexicons'
 export const id = 'app.bsky.feed.threadgate'
 
 export interface Record {
-  $type?: 'app.bsky.feed.threadgate' | 'app.bsky.feed.threadgate#main'
+  $type?: $Type<'app.bsky.feed.threadgate', 'main'>
   /** Reference (AT-URI) to the post record. */
   post: string
   allow?: (
     | $Typed<MentionRule>
     | $Typed<FollowingRule>
     | $Typed<ListRule>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   )[]
   createdAt: string
   /** List of hidden reply URIs. */
@@ -24,7 +24,11 @@ export interface Record {
   [k: string]: unknown
 }
 
-export function isRecord(v: unknown): v is $Typed<Record> {
+export function isRecord<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.threadgate', 'main'> }>
+  : V & { $type: $Type<'app.bsky.feed.threadgate', 'main'> } {
   return is$typed(v, id, 'main')
 }
 
@@ -32,12 +36,20 @@ export function validateRecord(v: unknown) {
   return lexicons.validate(`${id}#main`, v) as ValidationResult<Record>
 }
 
-/** Allow replies from actors mentioned in your post. */
-export interface MentionRule {
-  $type?: 'app.bsky.feed.threadgate#mentionRule'
+export function isValidRecord<V>(v: V): v is V & $Typed<Record> {
+  return isRecord(v) && validateRecord(v).success
 }
 
-export function isMentionRule(v: unknown): v is $Typed<MentionRule> {
+/** Allow replies from actors mentioned in your post. */
+export interface MentionRule {
+  $type?: $Type<'app.bsky.feed.threadgate', 'mentionRule'>
+}
+
+export function isMentionRule<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.threadgate', 'mentionRule'> }>
+  : V & { $type: $Type<'app.bsky.feed.threadgate', 'mentionRule'> } {
   return is$typed(v, id, 'mentionRule')
 }
 
@@ -48,12 +60,20 @@ export function validateMentionRule(v: unknown) {
   ) as ValidationResult<MentionRule>
 }
 
-/** Allow replies from actors you follow. */
-export interface FollowingRule {
-  $type?: 'app.bsky.feed.threadgate#followingRule'
+export function isValidMentionRule<V>(v: V): v is V & $Typed<MentionRule> {
+  return isMentionRule(v) && validateMentionRule(v).success
 }
 
-export function isFollowingRule(v: unknown): v is $Typed<FollowingRule> {
+/** Allow replies from actors you follow. */
+export interface FollowingRule {
+  $type?: $Type<'app.bsky.feed.threadgate', 'followingRule'>
+}
+
+export function isFollowingRule<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.threadgate', 'followingRule'> }>
+  : V & { $type: $Type<'app.bsky.feed.threadgate', 'followingRule'> } {
   return is$typed(v, id, 'followingRule')
 }
 
@@ -64,16 +84,28 @@ export function validateFollowingRule(v: unknown) {
   ) as ValidationResult<FollowingRule>
 }
 
+export function isValidFollowingRule<V>(v: V): v is V & $Typed<FollowingRule> {
+  return isFollowingRule(v) && validateFollowingRule(v).success
+}
+
 /** Allow replies from actors on a list. */
 export interface ListRule {
-  $type?: 'app.bsky.feed.threadgate#listRule'
+  $type?: $Type<'app.bsky.feed.threadgate', 'listRule'>
   list: string
 }
 
-export function isListRule(v: unknown): v is $Typed<ListRule> {
+export function isListRule<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.threadgate', 'listRule'> }>
+  : V & { $type: $Type<'app.bsky.feed.threadgate', 'listRule'> } {
   return is$typed(v, id, 'listRule')
 }
 
 export function validateListRule(v: unknown) {
   return lexicons.validate(`${id}#listRule`, v) as ValidationResult<ListRule>
+}
+
+export function isValidListRule<V>(v: V): v is V & $Typed<ListRule> {
+  return isListRule(v) && validateListRule(v).success
 }

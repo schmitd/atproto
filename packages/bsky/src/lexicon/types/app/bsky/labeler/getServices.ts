@@ -22,7 +22,7 @@ export interface OutputSchema {
   views: (
     | $Typed<AppBskyLabelerDefs.LabelerView>
     | $Typed<AppBskyLabelerDefs.LabelerViewDetailed>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   )[]
 }
 

@@ -48,17 +48,28 @@ export type Handler<HA extends HandlerAuth = never> = (
 ) => Promise<HandlerOutput> | HandlerOutput
 
 export interface Metadata {
-  $type?: 'chat.bsky.moderation.getActorMetadata#metadata'
+  $type?: $Type<'chat.bsky.moderation.getActorMetadata', 'metadata'>
   messagesSent: number
   messagesReceived: number
   convos: number
   convosStarted: number
 }
 
-export function isMetadata(v: unknown): v is $Typed<Metadata> {
+export function isMetadata<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<
+      V,
+      { $type: $Type<'chat.bsky.moderation.getActorMetadata', 'metadata'> }
+    >
+  : V & { $type: $Type<'chat.bsky.moderation.getActorMetadata', 'metadata'> } {
   return is$typed(v, id, 'metadata')
 }
 
 export function validateMetadata(v: unknown) {
   return lexicons.validate(`${id}#metadata`, v) as ValidationResult<Metadata>
+}
+
+export function isValidMetadata<V>(v: V): v is V & $Typed<Metadata> {
+  return isMetadata(v) && validateMetadata(v).success
 }

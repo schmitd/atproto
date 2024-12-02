@@ -9,12 +9,16 @@ import { lexicons } from '../../../../lexicons'
 export const id = 'com.atproto.repo.defs'
 
 export interface CommitMeta {
-  $type?: 'com.atproto.repo.defs#commitMeta'
+  $type?: $Type<'com.atproto.repo.defs', 'commitMeta'>
   cid: string
   rev: string
 }
 
-export function isCommitMeta(v: unknown): v is $Typed<CommitMeta> {
+export function isCommitMeta<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.repo.defs', 'commitMeta'> }>
+  : V & { $type: $Type<'com.atproto.repo.defs', 'commitMeta'> } {
   return is$typed(v, id, 'commitMeta')
 }
 
@@ -23,4 +27,8 @@ export function validateCommitMeta(v: unknown) {
     `${id}#commitMeta`,
     v,
   ) as ValidationResult<CommitMeta>
+}
+
+export function isValidCommitMeta<V>(v: V): v is V & $Typed<CommitMeta> {
+  return isCommitMeta(v) && validateCommitMeta(v).success
 }

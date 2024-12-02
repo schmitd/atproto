@@ -11,7 +11,7 @@ import * as ComAtprotoRepoStrongRef from '../../../com/atproto/repo/strongRef'
 export const id = 'app.bsky.actor.profile'
 
 export interface Record {
-  $type?: 'app.bsky.actor.profile' | 'app.bsky.actor.profile#main'
+  $type?: $Type<'app.bsky.actor.profile', 'main'>
   displayName?: string
   /** Free-form profile description text. */
   description?: string
@@ -19,19 +19,25 @@ export interface Record {
   avatar?: BlobRef
   /** Larger horizontal image to display behind profile view. */
   banner?: BlobRef
-  labels?:
-    | $Typed<ComAtprotoLabelDefs.SelfLabels>
-    | $Typed<{ [k: string]: unknown }>
+  labels?: $Typed<ComAtprotoLabelDefs.SelfLabels> | { $type: string }
   joinedViaStarterPack?: ComAtprotoRepoStrongRef.Main
   pinnedPost?: ComAtprotoRepoStrongRef.Main
   createdAt?: string
   [k: string]: unknown
 }
 
-export function isRecord(v: unknown): v is $Typed<Record> {
+export function isRecord<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.actor.profile', 'main'> }>
+  : V & { $type: $Type<'app.bsky.actor.profile', 'main'> } {
   return is$typed(v, id, 'main')
 }
 
 export function validateRecord(v: unknown) {
   return lexicons.validate(`${id}#main`, v) as ValidationResult<Record>
+}
+
+export function isValidRecord<V>(v: V): v is V & $Typed<Record> {
+  return isRecord(v) && validateRecord(v).success
 }

@@ -10,7 +10,7 @@ import * as AppBskyRichtextFacet from '../richtext/facet'
 export const id = 'app.bsky.graph.starterpack'
 
 export interface Record {
-  $type?: 'app.bsky.graph.starterpack' | 'app.bsky.graph.starterpack#main'
+  $type?: $Type<'app.bsky.graph.starterpack', 'main'>
   /** Display name for starter pack; can not be empty. */
   name: string
   description?: string
@@ -22,7 +22,11 @@ export interface Record {
   [k: string]: unknown
 }
 
-export function isRecord(v: unknown): v is $Typed<Record> {
+export function isRecord<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.graph.starterpack', 'main'> }>
+  : V & { $type: $Type<'app.bsky.graph.starterpack', 'main'> } {
   return is$typed(v, id, 'main')
 }
 
@@ -30,15 +34,27 @@ export function validateRecord(v: unknown) {
   return lexicons.validate(`${id}#main`, v) as ValidationResult<Record>
 }
 
+export function isValidRecord<V>(v: V): v is V & $Typed<Record> {
+  return isRecord(v) && validateRecord(v).success
+}
+
 export interface FeedItem {
-  $type?: 'app.bsky.graph.starterpack#feedItem'
+  $type?: $Type<'app.bsky.graph.starterpack', 'feedItem'>
   uri: string
 }
 
-export function isFeedItem(v: unknown): v is $Typed<FeedItem> {
+export function isFeedItem<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.graph.starterpack', 'feedItem'> }>
+  : V & { $type: $Type<'app.bsky.graph.starterpack', 'feedItem'> } {
   return is$typed(v, id, 'feedItem')
 }
 
 export function validateFeedItem(v: unknown) {
   return lexicons.validate(`${id}#feedItem`, v) as ValidationResult<FeedItem>
+}
+
+export function isValidFeedItem<V>(v: V): v is V & $Typed<FeedItem> {
+  return isFeedItem(v) && validateFeedItem(v).success
 }

@@ -44,13 +44,20 @@ export type Handler<HA extends HandlerAuth = never> = (
 ) => Promise<HandlerOutput> | HandlerOutput
 
 export interface Suggestion {
-  $type?: 'app.bsky.unspecced.getTaggedSuggestions#suggestion'
+  $type?: $Type<'app.bsky.unspecced.getTaggedSuggestions', 'suggestion'>
   tag: string
   subjectType: 'actor' | 'feed' | (string & {})
   subject: string
 }
 
-export function isSuggestion(v: unknown): v is $Typed<Suggestion> {
+export function isSuggestion<V>(v: V): v is V extends { $type?: string }
+  ? Extract<
+      V,
+      { $type: $Type<'app.bsky.unspecced.getTaggedSuggestions', 'suggestion'> }
+    >
+  : V & {
+      $type: $Type<'app.bsky.unspecced.getTaggedSuggestions', 'suggestion'>
+    } {
   return is$typed(v, id, 'suggestion')
 }
 
@@ -59,4 +66,8 @@ export function validateSuggestion(v: unknown) {
     `${id}#suggestion`,
     v,
   ) as ValidationResult<Suggestion>
+}
+
+export function isValidSuggestion<V>(v: V): v is V & $Typed<Suggestion> {
+  return isSuggestion(v) && validateSuggestion(v).success
 }

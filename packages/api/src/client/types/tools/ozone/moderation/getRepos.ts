@@ -20,7 +20,7 @@ export interface OutputSchema {
   repos: (
     | $Typed<ToolsOzoneModerationDefs.RepoViewDetail>
     | $Typed<ToolsOzoneModerationDefs.RepoViewNotFound>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   )[]
 }
 

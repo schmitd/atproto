@@ -23,7 +23,7 @@ export interface OutputSchema {
   messages: (
     | $Typed<ChatBskyConvoDefs.MessageView>
     | $Typed<ChatBskyConvoDefs.DeletedMessageView>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   )[]
 }
 

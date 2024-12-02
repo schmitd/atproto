@@ -9,17 +9,21 @@ import { lexicons } from '../../../../lexicons'
 export const id = 'app.bsky.feed.postgate'
 
 export interface Record {
-  $type?: 'app.bsky.feed.postgate' | 'app.bsky.feed.postgate#main'
+  $type?: $Type<'app.bsky.feed.postgate', 'main'>
   createdAt: string
   /** Reference (AT-URI) to the post record. */
   post: string
   /** List of AT-URIs embedding this post that the author has detached from. */
   detachedEmbeddingUris?: string[]
-  embeddingRules?: ($Typed<DisableRule> | $Typed<{ [k: string]: unknown }>)[]
+  embeddingRules?: ($Typed<DisableRule> | { $type: string })[]
   [k: string]: unknown
 }
 
-export function isRecord(v: unknown): v is $Typed<Record> {
+export function isRecord<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.postgate', 'main'> }>
+  : V & { $type: $Type<'app.bsky.feed.postgate', 'main'> } {
   return is$typed(v, id, 'main')
 }
 
@@ -27,12 +31,20 @@ export function validateRecord(v: unknown) {
   return lexicons.validate(`${id}#main`, v) as ValidationResult<Record>
 }
 
-/** Disables embedding of this post. */
-export interface DisableRule {
-  $type?: 'app.bsky.feed.postgate#disableRule'
+export function isValidRecord<V>(v: V): v is V & $Typed<Record> {
+  return isRecord(v) && validateRecord(v).success
 }
 
-export function isDisableRule(v: unknown): v is $Typed<DisableRule> {
+/** Disables embedding of this post. */
+export interface DisableRule {
+  $type?: $Type<'app.bsky.feed.postgate', 'disableRule'>
+}
+
+export function isDisableRule<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.postgate', 'disableRule'> }>
+  : V & { $type: $Type<'app.bsky.feed.postgate', 'disableRule'> } {
   return is$typed(v, id, 'disableRule')
 }
 
@@ -41,4 +53,8 @@ export function validateDisableRule(v: unknown) {
     `${id}#disableRule`,
     v,
   ) as ValidationResult<DisableRule>
+}
+
+export function isValidDisableRule<V>(v: V): v is V & $Typed<DisableRule> {
+  return isDisableRule(v) && validateDisableRule(v).success
 }

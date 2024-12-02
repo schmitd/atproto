@@ -11,7 +11,7 @@ import * as ComAtprotoLabelDefs from '../../../com/atproto/label/defs'
 export const id = 'chat.bsky.actor.defs'
 
 export interface ProfileViewBasic {
-  $type?: 'chat.bsky.actor.defs#profileViewBasic'
+  $type?: $Type<'chat.bsky.actor.defs', 'profileViewBasic'>
   did: string
   handle: string
   displayName?: string
@@ -23,7 +23,11 @@ export interface ProfileViewBasic {
   chatDisabled?: boolean
 }
 
-export function isProfileViewBasic(v: unknown): v is $Typed<ProfileViewBasic> {
+export function isProfileViewBasic<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'chat.bsky.actor.defs', 'profileViewBasic'> }>
+  : V & { $type: $Type<'chat.bsky.actor.defs', 'profileViewBasic'> } {
   return is$typed(v, id, 'profileViewBasic')
 }
 
@@ -32,4 +36,10 @@ export function validateProfileViewBasic(v: unknown) {
     `${id}#profileViewBasic`,
     v,
   ) as ValidationResult<ProfileViewBasic>
+}
+
+export function isValidProfileViewBasic<V>(
+  v: V,
+): v is V & $Typed<ProfileViewBasic> {
+  return isProfileViewBasic(v) && validateProfileViewBasic(v).success
 }

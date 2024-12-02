@@ -24,7 +24,7 @@ export interface OutputSchema {
     | $Typed<ChatBskyConvoDefs.LogLeaveConvo>
     | $Typed<ChatBskyConvoDefs.LogCreateMessage>
     | $Typed<ChatBskyConvoDefs.LogDeleteMessage>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   )[]
 }
 

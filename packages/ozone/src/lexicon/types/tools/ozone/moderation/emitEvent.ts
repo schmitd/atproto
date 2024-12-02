@@ -34,11 +34,11 @@ export interface InputSchema {
     | $Typed<ToolsOzoneModerationDefs.AccountEvent>
     | $Typed<ToolsOzoneModerationDefs.IdentityEvent>
     | $Typed<ToolsOzoneModerationDefs.RecordEvent>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   subject:
     | $Typed<ComAtprotoAdminDefs.RepoRef>
     | $Typed<ComAtprotoRepoStrongRef.Main>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   subjectBlobCids?: string[]
   createdBy: string
 }

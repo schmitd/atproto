@@ -20,7 +20,7 @@ export interface OutputSchema {
   records: (
     | $Typed<ToolsOzoneModerationDefs.RecordViewDetail>
     | $Typed<ToolsOzoneModerationDefs.RecordViewNotFound>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   )[]
 }
 

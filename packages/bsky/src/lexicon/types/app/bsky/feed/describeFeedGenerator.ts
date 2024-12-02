@@ -46,11 +46,15 @@ export type Handler<HA extends HandlerAuth = never> = (
 ) => Promise<HandlerOutput> | HandlerOutput
 
 export interface Feed {
-  $type?: 'app.bsky.feed.describeFeedGenerator#feed'
+  $type?: $Type<'app.bsky.feed.describeFeedGenerator', 'feed'>
   uri: string
 }
 
-export function isFeed(v: unknown): v is $Typed<Feed> {
+export function isFeed<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.describeFeedGenerator', 'feed'> }>
+  : V & { $type: $Type<'app.bsky.feed.describeFeedGenerator', 'feed'> } {
   return is$typed(v, id, 'feed')
 }
 
@@ -58,16 +62,28 @@ export function validateFeed(v: unknown) {
   return lexicons.validate(`${id}#feed`, v) as ValidationResult<Feed>
 }
 
+export function isValidFeed<V>(v: V): v is V & $Typed<Feed> {
+  return isFeed(v) && validateFeed(v).success
+}
+
 export interface Links {
-  $type?: 'app.bsky.feed.describeFeedGenerator#links'
+  $type?: $Type<'app.bsky.feed.describeFeedGenerator', 'links'>
   privacyPolicy?: string
   termsOfService?: string
 }
 
-export function isLinks(v: unknown): v is $Typed<Links> {
+export function isLinks<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.describeFeedGenerator', 'links'> }>
+  : V & { $type: $Type<'app.bsky.feed.describeFeedGenerator', 'links'> } {
   return is$typed(v, id, 'links')
 }
 
 export function validateLinks(v: unknown) {
   return lexicons.validate(`${id}#links`, v) as ValidationResult<Links>
+}
+
+export function isValidLinks<V>(v: V): v is V & $Typed<Links> {
+  return isLinks(v) && validateLinks(v).success
 }

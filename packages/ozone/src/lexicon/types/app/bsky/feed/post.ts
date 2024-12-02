@@ -17,7 +17,7 @@ import * as ComAtprotoRepoStrongRef from '../../../com/atproto/repo/strongRef'
 export const id = 'app.bsky.feed.post'
 
 export interface Record {
-  $type?: 'app.bsky.feed.post' | 'app.bsky.feed.post#main'
+  $type?: $Type<'app.bsky.feed.post', 'main'>
   /** The primary post content. May be an empty string, if there are embeds. */
   text: string
   /** DEPRECATED: replaced by app.bsky.richtext.facet. */
@@ -31,12 +31,10 @@ export interface Record {
     | $Typed<AppBskyEmbedExternal.Main>
     | $Typed<AppBskyEmbedRecord.Main>
     | $Typed<AppBskyEmbedRecordWithMedia.Main>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   /** Indicates human language of post primary text content. */
   langs?: string[]
-  labels?:
-    | $Typed<ComAtprotoLabelDefs.SelfLabels>
-    | $Typed<{ [k: string]: unknown }>
+  labels?: $Typed<ComAtprotoLabelDefs.SelfLabels> | { $type: string }
   /** Additional hashtags, in addition to any included in post text and facets. */
   tags?: string[]
   /** Client-declared timestamp when this post was originally created. */
@@ -44,7 +42,11 @@ export interface Record {
   [k: string]: unknown
 }
 
-export function isRecord(v: unknown): v is $Typed<Record> {
+export function isRecord<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.post', 'main'> }>
+  : V & { $type: $Type<'app.bsky.feed.post', 'main'> } {
   return is$typed(v, id, 'main')
 }
 
@@ -52,13 +54,21 @@ export function validateRecord(v: unknown) {
   return lexicons.validate(`${id}#main`, v) as ValidationResult<Record>
 }
 
+export function isValidRecord<V>(v: V): v is V & $Typed<Record> {
+  return isRecord(v) && validateRecord(v).success
+}
+
 export interface ReplyRef {
-  $type?: 'app.bsky.feed.post#replyRef'
+  $type?: $Type<'app.bsky.feed.post', 'replyRef'>
   root: ComAtprotoRepoStrongRef.Main
   parent: ComAtprotoRepoStrongRef.Main
 }
 
-export function isReplyRef(v: unknown): v is $Typed<ReplyRef> {
+export function isReplyRef<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.post', 'replyRef'> }>
+  : V & { $type: $Type<'app.bsky.feed.post', 'replyRef'> } {
   return is$typed(v, id, 'replyRef')
 }
 
@@ -66,16 +76,24 @@ export function validateReplyRef(v: unknown) {
   return lexicons.validate(`${id}#replyRef`, v) as ValidationResult<ReplyRef>
 }
 
+export function isValidReplyRef<V>(v: V): v is V & $Typed<ReplyRef> {
+  return isReplyRef(v) && validateReplyRef(v).success
+}
+
 /** Deprecated: use facets instead. */
 export interface Entity {
-  $type?: 'app.bsky.feed.post#entity'
+  $type?: $Type<'app.bsky.feed.post', 'entity'>
   index: TextSlice
   /** Expected values are 'mention' and 'link'. */
   type: string
   value: string
 }
 
-export function isEntity(v: unknown): v is $Typed<Entity> {
+export function isEntity<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.post', 'entity'> }>
+  : V & { $type: $Type<'app.bsky.feed.post', 'entity'> } {
   return is$typed(v, id, 'entity')
 }
 
@@ -83,17 +101,29 @@ export function validateEntity(v: unknown) {
   return lexicons.validate(`${id}#entity`, v) as ValidationResult<Entity>
 }
 
+export function isValidEntity<V>(v: V): v is V & $Typed<Entity> {
+  return isEntity(v) && validateEntity(v).success
+}
+
 /** Deprecated. Use app.bsky.richtext instead -- A text segment. Start is inclusive, end is exclusive. Indices are for utf16-encoded strings. */
 export interface TextSlice {
-  $type?: 'app.bsky.feed.post#textSlice'
+  $type?: $Type<'app.bsky.feed.post', 'textSlice'>
   start: number
   end: number
 }
 
-export function isTextSlice(v: unknown): v is $Typed<TextSlice> {
+export function isTextSlice<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'app.bsky.feed.post', 'textSlice'> }>
+  : V & { $type: $Type<'app.bsky.feed.post', 'textSlice'> } {
   return is$typed(v, id, 'textSlice')
 }
 
 export function validateTextSlice(v: unknown) {
   return lexicons.validate(`${id}#textSlice`, v) as ValidationResult<TextSlice>
+}
+
+export function isValidTextSlice<V>(v: V): v is V & $Typed<TextSlice> {
+  return isTextSlice(v) && validateTextSlice(v).success
 }

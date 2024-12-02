@@ -51,12 +51,19 @@ export type Handler<HA extends HandlerAuth = never> = (
 ) => Promise<HandlerOutput> | HandlerOutput
 
 export interface AccountCodes {
-  $type?: 'com.atproto.server.createInviteCodes#accountCodes'
+  $type?: $Type<'com.atproto.server.createInviteCodes', 'accountCodes'>
   account: string
   codes: string[]
 }
 
-export function isAccountCodes(v: unknown): v is $Typed<AccountCodes> {
+export function isAccountCodes<V>(v: V): v is V extends { $type?: string }
+  ? Extract<
+      V,
+      { $type: $Type<'com.atproto.server.createInviteCodes', 'accountCodes'> }
+    >
+  : V & {
+      $type: $Type<'com.atproto.server.createInviteCodes', 'accountCodes'>
+    } {
   return is$typed(v, id, 'accountCodes')
 }
 
@@ -65,4 +72,8 @@ export function validateAccountCodes(v: unknown) {
     `${id}#accountCodes`,
     v,
   ) as ValidationResult<AccountCodes>
+}
+
+export function isValidAccountCodes<V>(v: V): v is V & $Typed<AccountCodes> {
+  return isAccountCodes(v) && validateAccountCodes(v).success
 }

@@ -37,12 +37,19 @@ export function toKnownErr(e: any) {
 }
 
 export interface RecordBlob {
-  $type?: 'com.atproto.repo.listMissingBlobs#recordBlob'
+  $type?: $Type<'com.atproto.repo.listMissingBlobs', 'recordBlob'>
   cid: string
   recordUri: string
 }
 
-export function isRecordBlob(v: unknown): v is $Typed<RecordBlob> {
+export function isRecordBlob<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<
+      V,
+      { $type: $Type<'com.atproto.repo.listMissingBlobs', 'recordBlob'> }
+    >
+  : V & { $type: $Type<'com.atproto.repo.listMissingBlobs', 'recordBlob'> } {
   return is$typed(v, id, 'recordBlob')
 }
 
@@ -51,4 +58,8 @@ export function validateRecordBlob(v: unknown) {
     `${id}#recordBlob`,
     v,
   ) as ValidationResult<RecordBlob>
+}
+
+export function isValidRecordBlob<V>(v: V): v is V & $Typed<RecordBlob> {
+  return isRecordBlob(v) && validateRecordBlob(v).success
 }

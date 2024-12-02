@@ -9,7 +9,7 @@ import { lexicons } from '../../../../lexicons'
 export const id = 'tools.ozone.communication.defs'
 
 export interface TemplateView {
-  $type?: 'tools.ozone.communication.defs#templateView'
+  $type?: $Type<'tools.ozone.communication.defs', 'templateView'>
   id: string
   /** Name of the template. */
   name: string
@@ -26,7 +26,14 @@ export interface TemplateView {
   updatedAt: string
 }
 
-export function isTemplateView(v: unknown): v is $Typed<TemplateView> {
+export function isTemplateView<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<
+      V,
+      { $type: $Type<'tools.ozone.communication.defs', 'templateView'> }
+    >
+  : V & { $type: $Type<'tools.ozone.communication.defs', 'templateView'> } {
   return is$typed(v, id, 'templateView')
 }
 
@@ -35,4 +42,8 @@ export function validateTemplateView(v: unknown) {
     `${id}#templateView`,
     v,
   ) as ValidationResult<TemplateView>
+}
+
+export function isValidTemplateView<V>(v: V): v is V & $Typed<TemplateView> {
+  return isTemplateView(v) && validateTemplateView(v).success
 }

@@ -24,7 +24,7 @@ export interface OutputSchema {
   relationships: (
     | $Typed<AppBskyGraphDefs.Relationship>
     | $Typed<AppBskyGraphDefs.NotFoundActor>
-    | $Typed<{ [k: string]: unknown }>
+    | { $type: string }
   )[]
 }
 

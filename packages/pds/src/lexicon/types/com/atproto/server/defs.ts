@@ -9,7 +9,7 @@ import { $Type, $Typed, is$typed, OmitKey } from '../../../../util'
 export const id = 'com.atproto.server.defs'
 
 export interface InviteCode {
-  $type?: 'com.atproto.server.defs#inviteCode'
+  $type?: $Type<'com.atproto.server.defs', 'inviteCode'>
   code: string
   available: number
   disabled: boolean
@@ -19,7 +19,11 @@ export interface InviteCode {
   uses: InviteCodeUse[]
 }
 
-export function isInviteCode(v: unknown): v is $Typed<InviteCode> {
+export function isInviteCode<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.server.defs', 'inviteCode'> }>
+  : V & { $type: $Type<'com.atproto.server.defs', 'inviteCode'> } {
   return is$typed(v, id, 'inviteCode')
 }
 
@@ -30,13 +34,21 @@ export function validateInviteCode(v: unknown) {
   ) as ValidationResult<InviteCode>
 }
 
+export function isValidInviteCode<V>(v: V): v is V & $Typed<InviteCode> {
+  return isInviteCode(v) && validateInviteCode(v).success
+}
+
 export interface InviteCodeUse {
-  $type?: 'com.atproto.server.defs#inviteCodeUse'
+  $type?: $Type<'com.atproto.server.defs', 'inviteCodeUse'>
   usedBy: string
   usedAt: string
 }
 
-export function isInviteCodeUse(v: unknown): v is $Typed<InviteCodeUse> {
+export function isInviteCodeUse<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.server.defs', 'inviteCodeUse'> }>
+  : V & { $type: $Type<'com.atproto.server.defs', 'inviteCodeUse'> } {
   return is$typed(v, id, 'inviteCodeUse')
 }
 
@@ -45,4 +57,8 @@ export function validateInviteCodeUse(v: unknown) {
     `${id}#inviteCodeUse`,
     v,
   ) as ValidationResult<InviteCodeUse>
+}
+
+export function isValidInviteCodeUse<V>(v: V): v is V & $Typed<InviteCodeUse> {
+  return isInviteCodeUse(v) && validateInviteCodeUse(v).success
 }

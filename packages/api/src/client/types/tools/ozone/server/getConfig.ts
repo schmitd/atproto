@@ -37,11 +37,18 @@ export function toKnownErr(e: any) {
 }
 
 export interface ServiceConfig {
-  $type?: 'tools.ozone.server.getConfig#serviceConfig'
+  $type?: $Type<'tools.ozone.server.getConfig', 'serviceConfig'>
   url?: string
 }
 
-export function isServiceConfig(v: unknown): v is $Typed<ServiceConfig> {
+export function isServiceConfig<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<
+      V,
+      { $type: $Type<'tools.ozone.server.getConfig', 'serviceConfig'> }
+    >
+  : V & { $type: $Type<'tools.ozone.server.getConfig', 'serviceConfig'> } {
   return is$typed(v, id, 'serviceConfig')
 }
 
@@ -52,8 +59,12 @@ export function validateServiceConfig(v: unknown) {
   ) as ValidationResult<ServiceConfig>
 }
 
+export function isValidServiceConfig<V>(v: V): v is V & $Typed<ServiceConfig> {
+  return isServiceConfig(v) && validateServiceConfig(v).success
+}
+
 export interface ViewerConfig {
-  $type?: 'tools.ozone.server.getConfig#viewerConfig'
+  $type?: $Type<'tools.ozone.server.getConfig', 'viewerConfig'>
   role?:
     | 'tools.ozone.team.defs#roleAdmin'
     | 'tools.ozone.team.defs#roleModerator'
@@ -61,7 +72,11 @@ export interface ViewerConfig {
     | (string & {})
 }
 
-export function isViewerConfig(v: unknown): v is $Typed<ViewerConfig> {
+export function isViewerConfig<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'tools.ozone.server.getConfig', 'viewerConfig'> }>
+  : V & { $type: $Type<'tools.ozone.server.getConfig', 'viewerConfig'> } {
   return is$typed(v, id, 'viewerConfig')
 }
 
@@ -70,4 +85,8 @@ export function validateViewerConfig(v: unknown) {
     `${id}#viewerConfig`,
     v,
   ) as ValidationResult<ViewerConfig>
+}
+
+export function isValidViewerConfig<V>(v: V): v is V & $Typed<ViewerConfig> {
+  return isViewerConfig(v) && validateViewerConfig(v).success
 }

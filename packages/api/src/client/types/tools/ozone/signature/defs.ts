@@ -9,15 +9,23 @@ import { lexicons } from '../../../../lexicons'
 export const id = 'tools.ozone.signature.defs'
 
 export interface SigDetail {
-  $type?: 'tools.ozone.signature.defs#sigDetail'
+  $type?: $Type<'tools.ozone.signature.defs', 'sigDetail'>
   property: string
   value: string
 }
 
-export function isSigDetail(v: unknown): v is $Typed<SigDetail> {
+export function isSigDetail<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'tools.ozone.signature.defs', 'sigDetail'> }>
+  : V & { $type: $Type<'tools.ozone.signature.defs', 'sigDetail'> } {
   return is$typed(v, id, 'sigDetail')
 }
 
 export function validateSigDetail(v: unknown) {
   return lexicons.validate(`${id}#sigDetail`, v) as ValidationResult<SigDetail>
+}
+
+export function isValidSigDetail<V>(v: V): v is V & $Typed<SigDetail> {
+  return isSigDetail(v) && validateSigDetail(v).success
 }

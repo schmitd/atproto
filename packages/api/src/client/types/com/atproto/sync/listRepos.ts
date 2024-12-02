@@ -37,7 +37,7 @@ export function toKnownErr(e: any) {
 }
 
 export interface Repo {
-  $type?: 'com.atproto.sync.listRepos#repo'
+  $type?: $Type<'com.atproto.sync.listRepos', 'repo'>
   did: string
   /** Current repo commit CID */
   head: string
@@ -47,10 +47,18 @@ export interface Repo {
   status?: 'takendown' | 'suspended' | 'deactivated' | (string & {})
 }
 
-export function isRepo(v: unknown): v is $Typed<Repo> {
+export function isRepo<V>(
+  v: V,
+): v is V extends { $type?: string }
+  ? Extract<V, { $type: $Type<'com.atproto.sync.listRepos', 'repo'> }>
+  : V & { $type: $Type<'com.atproto.sync.listRepos', 'repo'> } {
   return is$typed(v, id, 'repo')
 }
 
 export function validateRepo(v: unknown) {
   return lexicons.validate(`${id}#repo`, v) as ValidationResult<Repo>
+}
+
+export function isValidRepo<V>(v: V): v is V & $Typed<Repo> {
+  return isRepo(v) && validateRepo(v).success
 }
