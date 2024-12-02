@@ -47,11 +47,17 @@ function check$type<Id extends string, Hash extends string>(
         $type.endsWith(hash)
 }
 
+export type Is$Typed<V, Id extends string, Hash extends string> = V extends {
+  $type?: string
+}
+  ? Extract<V, { $type: $Type<Id, Hash> }>
+  : V & { $type: $Type<Id, Hash> }
+
 export function is$typed<V, Id extends string, Hash extends string>(
   v: V,
   id: Id,
   hash: Hash,
-): v is V & object & { $type: $Type<Id, Hash> } {
+): v is Is$Typed<V, Id, Hash> {
   return has$type(v) && check$type(v.$type, id, hash)
 }
 `)

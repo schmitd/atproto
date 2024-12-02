@@ -432,9 +432,7 @@ export function genObjHelpers(
 ) {
   const hash = getHash(lexUri)
 
-  //= export function is{X}(v: unknown): v is X & { $type: NS } {...}
-
-  const $type = `$Type<${JSON.stringify(stripHash(stripScheme(lexUri)))}, ${JSON.stringify(getHash(lexUri))}>`
+  //= export function is{X}<V>(v: V) {...}
 
   const isX = toCamelCase(`is-${ifaceName}`)
   file
@@ -442,7 +440,6 @@ export function genObjHelpers(
       name: isX,
       typeParameters: [{ name: `V` }],
       parameters: [{ name: `v`, type: `V` }],
-      returnType: `v is V extends { $type?: string } ? Extract<V, { $type: ${$type} }> : V & { $type: ${$type} }`,
       isExported: true,
     })
     .setBodyText(`return is$typed(v, id, ${JSON.stringify(hash)})`)
