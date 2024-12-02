@@ -29,7 +29,7 @@ function check$type<Id extends string, Hash extends string>(
     ? hash === 'main'
     : // $type === `${id}#${hash}`
       $type.length === id.length + 1 + hash.length &&
-        $type[id.length] === '#' &&
+        $type.charCodeAt(id.length) === 35 /* '#' */ &&
         $type.startsWith(id) &&
         $type.endsWith(hash)
 }
