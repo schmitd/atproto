@@ -23,17 +23,38 @@ export const envToCfg = (env: ServerEnvironment): ServerConfig => {
     apiKeys: new Set(env.apiKeys),
   }
 
-  let revenueCatCfg: RevenueCatConfig | undefined
+  let purchasesCfg: PurchasesConfig | undefined
   if (env.revenueCatV1ApiKey) {
-    assert(env.revenueCatV1ApiUrl, 'missing revenue cat v1 api url')
+    assert(env.revenueCatV1ApiUrl, 'missing RevenueCat V1 api url')
     assert(
       env.revenueCatWebhookAuthorization,
-      'missing revenue cat webhook authorization',
+      'missing RevenueCat webhook authorization',
     )
-    revenueCatCfg = {
-      v1ApiKey: env.revenueCatV1ApiKey,
-      v1ApiUrl: env.revenueCatV1ApiUrl,
-      webhookAuthorization: env.revenueCatWebhookAuthorization,
+    assert(
+      env.stripePriceIdMonthly,
+      'missing Stripe Price ID for monthly subscription',
+    )
+    assert(
+      env.stripePriceIdYearly,
+      'missing Stripe Product ID for yearly subscription',
+    )
+    assert(
+      env.stripeProductIdMonthly,
+      'missing Stripe Product ID for monthly subscription',
+    )
+    assert(
+      env.stripeProductIdYearly,
+      'missing Stripe Product ID for yearly subscription',
+    )
+
+    purchasesCfg = {
+      revenueCatV1ApiKey: env.revenueCatV1ApiKey,
+      revenueCatV1ApiUrl: env.revenueCatV1ApiUrl,
+      revenueCatWebhookAuthorization: env.revenueCatWebhookAuthorization,
+      stripePriceIdMonthly: env.stripePriceIdMonthly,
+      stripePriceIdYearly: env.stripePriceIdYearly,
+      stripeProductIdMonthly: env.stripeProductIdMonthly,
+      stripeProductIdYearly: env.stripeProductIdYearly,
     }
   }
 
@@ -41,7 +62,7 @@ export const envToCfg = (env: ServerEnvironment): ServerConfig => {
     service: serviceCfg,
     db: dbCfg,
     auth: authCfg,
-    revenueCat: revenueCatCfg,
+    purchases: purchasesCfg,
   }
 }
 
@@ -49,7 +70,7 @@ export type ServerConfig = {
   service: ServiceConfig
   db: DatabaseConfig
   auth: AuthConfig
-  revenueCat?: RevenueCatConfig
+  purchases?: PurchasesConfig
 }
 
 type ServiceConfig = {
@@ -71,10 +92,14 @@ type AuthConfig = {
   apiKeys: Set<string>
 }
 
-type RevenueCatConfig = {
-  v1ApiUrl: string
-  v1ApiKey: string
-  webhookAuthorization: string
+type PurchasesConfig = {
+  revenueCatV1ApiKey: string
+  revenueCatV1ApiUrl: string
+  revenueCatWebhookAuthorization: string
+  stripePriceIdMonthly: string
+  stripePriceIdYearly: string
+  stripeProductIdMonthly: string
+  stripeProductIdYearly: string
 }
 
 export const readEnv = (): ServerEnvironment => {
@@ -92,12 +117,16 @@ export const readEnv = (): ServerEnvironment => {
     dbMigrate: envBool('BSYNC_DB_MIGRATE'),
     // secrets
     apiKeys: envList('BSYNC_API_KEYS'),
-    // revenue cat
+    // purchases
     revenueCatV1ApiKey: envStr('BSYNC_REVENUE_CAT_V1_API_KEY'),
     revenueCatV1ApiUrl: envStr('BSYNC_REVENUE_CAT_V1_API_URL'),
     revenueCatWebhookAuthorization: envStr(
       'BSYNC_REVENUE_CAT_WEBHOOK_AUTHORIZATION',
     ),
+    stripePriceIdMonthly: envStr('BSYNC_STRIPE_PRICE_ID_MONTHLY'),
+    stripePriceIdYearly: envStr('BSYNC_STRIPE_PRICE_ID_YEARLY'),
+    stripeProductIdMonthly: envStr('BSYNC_STRIPE_PRODUCT_ID_MONTHLY'),
+    stripeProductIdYearly: envStr('BSYNC_STRIPE_PRODUCT_ID_YEARLY'),
   }
 }
 
@@ -115,8 +144,12 @@ export type ServerEnvironment = {
   dbMigrate?: boolean
   // secrets
   apiKeys: string[]
-  // revenue cat
-  revenueCatV1ApiUrl?: string
+  // purchases
   revenueCatV1ApiKey?: string
+  revenueCatV1ApiUrl?: string
   revenueCatWebhookAuthorization?: string
+  stripePriceIdMonthly?: string
+  stripePriceIdYearly?: string
+  stripeProductIdMonthly?: string
+  stripeProductIdYearly?: string
 }

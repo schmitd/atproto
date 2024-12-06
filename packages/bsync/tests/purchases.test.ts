@@ -1,17 +1,26 @@
 import http from 'node:http'
 import { once } from 'node:events'
 import getPort from 'get-port'
-import { BsyncService, Database, envToCfg } from '../src'
+import {
+  authWithApiKey,
+  BsyncClient,
+  BsyncService,
+  createClient,
+  Database,
+  envToCfg,
+} from '../src'
 import {
   RcEntitlement,
   RcEventBody,
   RcGetSubscriberResponse,
 } from '../src/purchases'
+import { Code, ConnectError } from '@connectrpc/connect'
 
 const revenueCatWebhookAuthorization = 'Bearer any-token'
 
 describe('purchases', () => {
   let bsync: BsyncService
+  let client: BsyncClient
   let bsyncUrl: string
 
   const actorDid = 'did:example:a'
@@ -46,6 +55,10 @@ describe('purchases', () => {
         revenueCatV1ApiKey: 'any-key',
         revenueCatV1ApiUrl: `http://localhost:${revenueCatPort}`,
         revenueCatWebhookAuthorization,
+        stripePriceIdMonthly: 'price_id_monthly',
+        stripePriceIdYearly: 'price_id_yearly',
+        stripeProductIdMonthly: 'product_id_monthly',
+        stripeProductIdYearly: 'product_id_yearly',
       }),
     )
 
@@ -53,6 +66,11 @@ describe('purchases', () => {
 
     await bsync.ctx.db.migrateToLatestOrThrow()
     await bsync.start()
+    client = createClient({
+      httpVersion: '1.1',
+      baseUrl: `http://localhost:${bsync.ctx.cfg.service.port}`,
+      interceptors: [authWithApiKey('key-1')],
+    })
   })
 
   afterAll(async () => {
@@ -77,8 +95,10 @@ describe('purchases', () => {
       })
 
       expect(response.status).toBe(403)
-      expect(response.json()).resolves.toMatchObject({
+      const body = await response.json()
+      expect({ ...body }).toStrictEqual({
         error: 'Forbidden: invalid authentication for RevenueCat webhook',
+        success: false,
       })
     })
 
@@ -86,8 +106,10 @@ describe('purchases', () => {
       const response = await callWebhook(bsyncUrl, buildWebhookBody('invalid'))
 
       expect(response.status).toBe(400)
-      expect(response.json()).resolves.toMatchObject({
+      const body = await response.json()
+      expect({ ...body }).toStrictEqual({
         error: 'Bad request: invalid DID in app_user_id',
+        success: false,
       })
     })
 
@@ -97,8 +119,10 @@ describe('purchases', () => {
       } as unknown as RcEventBody)
 
       expect(response.status).toBe(400)
-      expect(response.json()).resolves.toMatchObject({
+      const body = await response.json()
+      expect({ ...body }).toStrictEqual({
         error: 'Bad request: body schema validation failed',
+        success: false,
       })
     })
 
@@ -106,6 +130,7 @@ describe('purchases', () => {
       revenueCatApiMock.mockReturnValueOnce({
         subscriber: {
           entitlements: { entitlementExpired },
+          subscriptions: {},
         },
       })
 
@@ -118,7 +143,7 @@ describe('purchases', () => {
         .orderBy('id', 'desc')
         .executeTakeFirstOrThrow()
 
-      expect(op0).toMatchObject({
+      expect(op0).toStrictEqual({
         id: expect.any(Number),
         actorDid,
         entitlements: [],
@@ -131,7 +156,7 @@ describe('purchases', () => {
           .selectAll()
           .where('actorDid', '=', actorDid)
           .executeTakeFirstOrThrow(),
-      ).resolves.toMatchObject({
+      ).resolves.toStrictEqual({
         actorDid,
         entitlements: [],
         fromId: op0.id,
@@ -140,6 +165,7 @@ describe('purchases', () => {
       revenueCatApiMock.mockReturnValueOnce({
         subscriber: {
           entitlements: { entitlementValid, entitlementExpired },
+          subscriptions: {},
         },
       })
 
@@ -152,7 +178,7 @@ describe('purchases', () => {
         .orderBy('id', 'desc')
         .executeTakeFirstOrThrow()
 
-      expect(op1).toMatchObject({
+      expect(op1).toStrictEqual({
         id: expect.any(Number),
         actorDid,
         entitlements: ['entitlementValid'],
@@ -165,7 +191,7 @@ describe('purchases', () => {
           .selectAll()
           .where('actorDid', '=', actorDid)
           .executeTakeFirstOrThrow(),
-      ).resolves.toMatchObject({
+      ).resolves.toStrictEqual({
         actorDid,
         entitlements: ['entitlementValid'],
         fromId: op1.id,
@@ -174,7 +200,7 @@ describe('purchases', () => {
 
     it('sets empty array in the cache if no entitlements are present at all', async () => {
       revenueCatApiMock.mockReturnValue({
-        subscriber: { entitlements: {} },
+        subscriber: { entitlements: {}, subscriptions: {} },
       })
 
       await callWebhook(bsyncUrl, buildWebhookBody(actorDid))
@@ -186,7 +212,7 @@ describe('purchases', () => {
         .orderBy('id', 'desc')
         .executeTakeFirstOrThrow()
 
-      expect(op).toMatchObject({
+      expect(op).toStrictEqual({
         id: expect.any(Number),
         actorDid,
         entitlements: [],
@@ -199,11 +225,192 @@ describe('purchases', () => {
           .selectAll()
           .where('actorDid', '=', actorDid)
           .executeTakeFirstOrThrow(),
-      ).resolves.toMatchObject({
+      ).resolves.toStrictEqual({
         actorDid,
         entitlements: [],
         fromId: op.id,
       })
+    })
+  })
+
+  describe('addPurchaseOperation', () => {
+    it('fails on bad inputs', async () => {
+      await expect(
+        client.addPurchaseOperation({
+          actorDid: 'invalid',
+        }),
+      ).rejects.toStrictEqual(
+        new ConnectError('actor_did must be a valid did', Code.InvalidArgument),
+      )
+    })
+
+    it('stores valid entitlements from the API response, excluding expired', async () => {
+      revenueCatApiMock.mockReturnValueOnce({
+        subscriber: {
+          entitlements: { entitlementExpired },
+          subscriptions: {},
+        },
+      })
+
+      await client.addPurchaseOperation({ actorDid })
+
+      const op0 = await bsync.ctx.db.db
+        .selectFrom('purchase_op')
+        .selectAll()
+        .where('actorDid', '=', actorDid)
+        .orderBy('id', 'desc')
+        .executeTakeFirstOrThrow()
+
+      expect(op0).toStrictEqual({
+        id: expect.any(Number),
+        actorDid,
+        entitlements: [],
+        createdAt: expect.any(Date),
+      })
+
+      await expect(
+        bsync.ctx.db.db
+          .selectFrom('purchase_item')
+          .selectAll()
+          .where('actorDid', '=', actorDid)
+          .executeTakeFirstOrThrow(),
+      ).resolves.toStrictEqual({
+        actorDid,
+        entitlements: [],
+        fromId: op0.id,
+      })
+
+      revenueCatApiMock.mockReturnValueOnce({
+        subscriber: {
+          entitlements: { entitlementValid, entitlementExpired },
+          subscriptions: {},
+        },
+      })
+
+      await client.addPurchaseOperation({ actorDid })
+
+      const op1 = await bsync.ctx.db.db
+        .selectFrom('purchase_op')
+        .selectAll()
+        .where('actorDid', '=', actorDid)
+        .orderBy('id', 'desc')
+        .executeTakeFirstOrThrow()
+
+      expect(op1).toStrictEqual({
+        id: expect.any(Number),
+        actorDid,
+        entitlements: ['entitlementValid'],
+        createdAt: expect.any(Date),
+      })
+
+      await expect(
+        bsync.ctx.db.db
+          .selectFrom('purchase_item')
+          .selectAll()
+          .where('actorDid', '=', actorDid)
+          .executeTakeFirstOrThrow(),
+      ).resolves.toStrictEqual({
+        actorDid,
+        entitlements: ['entitlementValid'],
+        fromId: op1.id,
+      })
+    })
+
+    it('sets empty array in the cache if no entitlements are present at all', async () => {
+      revenueCatApiMock.mockReturnValue({
+        subscriber: { entitlements: {}, subscriptions: {} },
+      })
+
+      await client.addPurchaseOperation({ actorDid })
+
+      const op = await bsync.ctx.db.db
+        .selectFrom('purchase_op')
+        .selectAll()
+        .where('actorDid', '=', actorDid)
+        .orderBy('id', 'desc')
+        .executeTakeFirstOrThrow()
+
+      expect(op).toStrictEqual({
+        id: expect.any(Number),
+        actorDid,
+        entitlements: [],
+        createdAt: expect.any(Date),
+      })
+
+      await expect(
+        bsync.ctx.db.db
+          .selectFrom('purchase_item')
+          .selectAll()
+          .where('actorDid', '=', actorDid)
+          .executeTakeFirstOrThrow(),
+      ).resolves.toStrictEqual({
+        actorDid,
+        entitlements: [],
+        fromId: op.id,
+      })
+    })
+  })
+
+  describe('getActiveSubscriptions', () => {})
+
+  describe('getSubscriptionGroup', () => {
+    type Input = { group: string; platform: string }
+    type Expected = { offerings: { id: string; product: string }[] }
+
+    it('returns the expected data when input is correct', async () => {
+      const t = async (input: Input, expected: Expected) => {
+        const res = await client.getSubscriptionGroup(input)
+        expect({
+          offerings: res.offerings.map((o) => ({ ...o })),
+        }).toStrictEqual(expected)
+      }
+
+      await t(
+        { group: 'core', platform: 'android' },
+        {
+          offerings: [
+            { id: 'coreMonthly', product: 'bluesky_plus_core_v1:monthly' },
+            { id: 'coreAnnual', product: 'bluesky_plus_core_v1:annual' },
+          ],
+        },
+      )
+
+      await t(
+        { group: 'core', platform: 'ios' },
+        {
+          offerings: [
+            { id: 'coreMonthly', product: 'bluesky_plus_core_v1_monthly' },
+            { id: 'coreAnnual', product: 'bluesky_plus_core_v1_annual' },
+          ],
+        },
+      )
+
+      // await t(
+      //   { group: 'core', platform: 'web' },
+      //   {
+      //     offerings: [
+      //       { id: 'coreMonthly', product: 'TODO' },
+      //       { id: 'coreAnnual', product: 'TODO' },
+      //     ],
+      //   },
+      // )
+    })
+
+    it('throws the expected error when input is incorrect', async () => {
+      const t = async (input: Input, expected: string) => {
+        await expect(client.getSubscriptionGroup(input)).rejects.toThrow(
+          expected,
+        )
+      }
+
+      await t(
+        { group: 'wrong-group', platform: 'android' },
+        `invalid 'group' input`,
+      )
+      await t(
+        { group: 'core', platform: 'wrong-platform' },
+        `invalid 'platform' input`,
+      )
     })
   })
 })
